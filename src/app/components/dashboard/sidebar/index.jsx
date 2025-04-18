@@ -49,7 +49,7 @@ const menuItems = [
         icon: <TransactionIcon />,
       },
       {
-        title: "payments",
+        title: "Payments",
         path: "/payments",
         icon: <PaymentIcon />,
       },
