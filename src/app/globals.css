@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-mobile: 375px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-laptop-m: 1280px;
+  --breakpoint-desktop: 1440px;
+}
+
+body {
+  background: #FFF;
+
+}
+
+.bg-btn {
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #ff7b1c;
+  box-shadow: 0px 1px 2px 0px rgba(106, 68, 25, 0.4),
+    0px 0px 0px 1px rgba(184, 91, 3, 0.76);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+/* Override webkit autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #191919;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.tab-btn {
+  background: linear-gradient(
+      180deg,
+      rgba(223, 225, 231, 0) 0%,
+      rgba(223, 225, 231, 0.05) 100%
+    ),
+    rgba(255, 255, 255, 0.04);
+}
+.card-bg {
+  border-radius: 16px;
+  border: 1px solid #b1b8bf;
+  background: url("/public/cardmask.png"),
+    radial-gradient(
+      2747.94% 1591.16% at -257.69% -1076.06%,
+      rgba(89, 96, 106, 0.81) 2.51%,
+      rgba(85, 91, 105, 0.81) 6.06%,
+      rgba(176, 176, 176, 0.82) 11.51%,
+      rgba(95, 101, 115, 0.64) 17.5%,
+      rgba(169, 171, 179, 0.86) 23.07%,
+      rgba(182, 185, 192, 0.83) 33.45%,
+      rgba(98, 107, 116, 0.76) 53.96%,
+      rgba(114, 122, 130, 0.77) 60%,
+      rgba(142, 149, 157, 0.87) 60.79%,
+      rgba(242, 243, 245, 0.81) 67.47%,
+      rgba(239, 239, 241, 0.85) 68.08%,
+      rgba(105, 112, 122, 0.74) 74.82%,
+      rgba(87, 93, 107, 0.83) 78.81%,
+      rgba(99, 106, 116, 0.8) 83.61%,
+      rgba(241, 241, 243, 0.78) 93.62%,
+      rgba(151, 154, 163, 0.73) 97.03%,
+      rgba(177, 179, 185, 0.79) 98.83%
+    );
+  background-blend-mode: screen, normal;
+}
+
+.mini-card-bg {
+  border-radius: 8px;
+  border: 0.5px solid rgba(234, 236, 240, 0.08);
+  background: linear-gradient(100deg, #101010 2.09%, #02060c 100.36%);
+}
+.wallet-bg {
+  border-radius: 16px;
+  border: 1px solid #ffffff0a;
+  background: linear-gradient(
+    125deg,
+    #473307 -69.36%,
+    rgba(71, 41, 7, 0) 97.26%
+  );
+  box-shadow: 0px 0px 0px 3px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(35.200740814208984px);
+}
+.staking-bg {
+  background: linear-gradient(
+    96deg,
+    rgba(255, 255, 255, 0.07) -0.82%,
+    rgba(255, 255, 255, 0) 97.33%
+  );
+}
+
+.yellow-stake {
+  border-radius: 8px;
+  border: 1px solid #ff862f;
+  background: rgba(255, 255, 255, 0.03);
+}
