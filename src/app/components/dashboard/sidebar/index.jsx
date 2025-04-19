@@ -30,7 +30,7 @@ const menuItems = [
     list: [
       {
         title: "Dashboard",
-        path: "/home",
+        path: "/dashboard",
         icon: <DashboardIcon />,
       },
       {
