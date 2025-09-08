@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import MenuLink from "./menuLinks/menuLink";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   EmptyWalletIcon,
   Group11Icon,
@@ -82,42 +83,66 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
   };
 
   return (
-    <aside
-      className="flex h-full flex-col justify-between border-r border-[#E1E4EA] relative transition-all duration-300 font-[family-name:var(--font-inter)] w-full"
-    >
+    <aside className="flex h-full flex-col justify-between border-r border-[#E1E4EA] relative transition-all duration-300 font-[family-name:var(--font-inter)] w-full">
       <div className="relative">
         <div className="top-[29.5%] right-[12px] absolute">
-          <button
+          <motion.button
             type="button"
             className="absolute flex h-6 w-6 items-center justify-center border border-[#000000] rounded-full"
             onClick={toggleSidebar}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
-            {isSidebarExpanded ? <FaAngleLeft /> : <FaAngleRight />}
-          </button>
+            <motion.div
+              key={isSidebarExpanded ? "left" : "right"}
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {isSidebarExpanded ? <FaAngleLeft /> : <FaAngleRight />}
+            </motion.div>
+          </motion.button>
         </div>
         <div className="w-full  ">
           <div className="p-3">
             <div className="flex justify-between items-center p-3">
               <div className="flex gap-3 items-center">
                 <Image src={finance} alt="logo" />
-                <div
-                  className={`flex flex-col gap-1 ${
-                    !isSidebarExpanded ? "hidden" : ""
-                  }`}
-                >
-                  <h5 className="text-[#0E121B] text-sm font-medium leading-5">
-                    Apex
-                  </h5>
-                  <p className="text-xs text-[#525866] leading-[16px]">
-                    Finance & Banking
-                  </p>
-                </div>
+                <AnimatePresence>
+                  {isSidebarExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: "auto" }}
+                      exit={{ opacity: 0, width: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="flex flex-col gap-1 overflow-hidden"
+                    >
+                      <h5 className="text-[#0E121B] text-sm font-medium leading-5 whitespace-nowrap">
+                        Apex
+                      </h5>
+                      <p className="text-xs text-[#525866] leading-[16px] whitespace-nowrap">
+                        Finance & Banking
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              <Image
-                className={`${!isSidebarExpanded ? "hidden" : ""}`}
-                src={compact}
-                alt="compact"
-              />
+              <AnimatePresence>
+                {isSidebarExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <Image
+                      src={compact}
+                      alt="compact"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
           <div className="px-5">
@@ -131,7 +156,19 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
                 : "px-3 flex flex-col items-center justify-center"
             }`}
           >
-            <h5 className="text-xs text-[#99A0AE] p-1">MAIN</h5>
+            <AnimatePresence>
+              {isSidebarExpanded && (
+                <motion.h5 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="text-xs text-[#99A0AE] p-1"
+                >
+                  MAIN
+                </motion.h5>
+              )}
+            </AnimatePresence>
             <ul className="flex flex-col mt-2">
               <li className="flex gap-1 flex-col">
                 {menuItems
@@ -155,7 +192,19 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
                 : "px-3 flex flex-col items-center justify-center"
             }`}
           >
-            <h5 className="text-xs text-[#99A0AE] p-1">OTHERS</h5>
+            <AnimatePresence>
+              {isSidebarExpanded && (
+                <motion.h5 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="text-xs text-[#99A0AE] p-1"
+                >
+                  OTHERS
+                </motion.h5>
+              )}
+            </AnimatePresence>
             <ul className="flex flex-col mt-2">
               <li className="flex gap-1 flex-col">
                 {menuItems
@@ -179,4 +228,3 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
 };
 
 export default Sidebar;
-

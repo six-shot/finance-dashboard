@@ -2,6 +2,7 @@
 import Header from "../components/dashboard/header";
 import Sidebar from "../components/dashboard/sidebar";
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Layout = ({ children }) => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(() => {
@@ -28,23 +29,25 @@ const Layout = ({ children }) => {
 
   return (
     <div className="flex max-w-[1440px] mx-auto">
-      <div
-        className={`fixed h-screen bg-primary transition-all duration-300`}
-        style={{ width: `${sidebarWidth}px` }}
+      <motion.div
+        className="fixed h-screen bg-primary"
+        animate={{ width: sidebarWidth }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <Sidebar
           isSidebarExpanded={isSidebarExpanded}
           setIsSidebarExpanded={setIsSidebarExpanded}
         />
-      </div>
+      </motion.div>
 
-      <div
-        className="flex-1 h-screen text-white transition-all duration-300"
-        style={{ marginLeft: `${sidebarWidth}px` }}
+      <motion.div
+        className="flex-1 h-screen text-white"
+        animate={{ marginLeft: sidebarWidth }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <Header />
         <div className="p-8"> {children}</div>
-      </div>
+      </motion.div>
     </div>
   );
 };
