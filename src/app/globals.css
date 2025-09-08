@@ -10,8 +10,7 @@
 }
 
 body {
-  background: #FFF;
-
+  background: #fff;
 }
 
 .bg-btn {
@@ -114,7 +113,29 @@ input:-webkit-autofill:active {
   border: 1px solid #ff862f;
   background: rgba(255, 255, 255, 0.03);
 }
+
 .blur-bg {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, #fff 42.87%);
-  filter: blur(6px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.header-mask {
+  position: relative;
+}
+
+.header-mask::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
 }
