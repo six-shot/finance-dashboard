@@ -5,12 +5,12 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <div>
-      <div className="p-3  h-[88px]">
+    <div className="w-full">
+      <div className="h-[88px]">
         <div className="flex justify-between items-center p-3">
           <div className="flex gap-3.5 items-center">
             <div className="w-[48px] h-[48px] bg-[#C0D5FF] rounded-full">
-                <Image src="/avatarr.png" width={48} height={48} alt="avatar"/>
+              <Image src="/avatarr.png" width={48} height={48} alt="avatar" />
             </div>
             <div className="flex flex-col font-[family-name:var(--font-inter)]">
               <h4 className="text-[18px] text-[#0E121B] leading-6 tracking-[-0.27px] font-medium">
@@ -29,9 +29,7 @@ export default function Header() {
               <div className="relative">
                 {" "}
                 <Notification />
-                <div
-                  className="absolute top-[1px] right-[4px] w-[5px] h-[5px]  bg-[#FB3748] rounded-full drop-shadow-[0_1px_2px_rgba(10,_13,_20,_0.03)]"
-                ></div>
+                <div className="absolute top-[1px] right-[4px] w-[5px] h-[5px]  bg-[#FB3748] rounded-full drop-shadow-[0_1px_2px_rgba(10,_13,_20,_0.03)]"></div>
               </div>
             </div>
 

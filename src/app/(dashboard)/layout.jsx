@@ -21,11 +21,15 @@ const Layout = ({ children }) => {
       </div>
 
       <div
-        className="flex-1 h-screen text-white"
+        className="flex-1 h-screen text-white w-full relative"
         style={{ marginLeft: sidebarWidth }}
       >
-        <Header />
-        <div className="p-8"> {children}</div>
+        <div className="sticky top-0 z-50 bg-white w-full">
+          <div className="px-8">
+            <Header />
+          </div>
+        </div>
+        <div className="px-8"> {children}</div>
       </div>
     </div>
   );

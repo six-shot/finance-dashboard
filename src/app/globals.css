@@ -114,3 +114,7 @@ input:-webkit-autofill:active {
   border: 1px solid #ff862f;
   background: rgba(255, 255, 255, 0.03);
 }
+.blur-bg {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, #fff 42.87%);
+  filter: blur(6px);
+}
