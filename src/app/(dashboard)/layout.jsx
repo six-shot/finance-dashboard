@@ -1,53 +1,32 @@
 "use client";
 import Header from "../components/dashboard/header";
 import Sidebar from "../components/dashboard/sidebar";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 const Layout = ({ children }) => {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = window.localStorage.getItem("sidebarExpanded");
-      if (saved === null) {
-        return true;
-      }
-      return JSON.parse(saved);
-    }
-    return true;
-  });
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "sidebarExpanded",
-        JSON.stringify(isSidebarExpanded)
-      );
-    }
-  }, [isSidebarExpanded]);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
   const sidebarWidth = isSidebarExpanded ? 280 : 80;
 
   return (
     <div className="flex max-w-[1440px] mx-auto">
-      <motion.div
+      <div
         className="fixed h-screen bg-primary"
-        animate={{ width: sidebarWidth }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        style={{ width: sidebarWidth }}
       >
         <Sidebar
           isSidebarExpanded={isSidebarExpanded}
           setIsSidebarExpanded={setIsSidebarExpanded}
         />
-      </motion.div>
+      </div>
 
-      <motion.div
+      <div
         className="flex-1 h-screen text-white"
-        animate={{ marginLeft: sidebarWidth }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        style={{ marginLeft: sidebarWidth }}
       >
         <Header />
         <div className="p-8"> {children}</div>
-      </motion.div>
+      </div>
     </div>
   );
 };

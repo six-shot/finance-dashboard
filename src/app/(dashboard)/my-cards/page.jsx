@@ -20,6 +20,7 @@ import {
 } from "@/app/components/ui/jsx/icons";
 import { ArrowRightIcon } from "@/app/components/ui/jsx/icons";
 import Image from "next/image";
+import { PlatinumIcon } from "@/app/components/dashboard/sidebar";
 
 export default function MyCardsPage() {
   const [activeTab, setActiveTab] = useState("virtual");
@@ -27,7 +28,7 @@ export default function MyCardsPage() {
   const transactions = [
     {
       id: 1,
-      icon:<Netflix/>,
+      icon: <Netflix />,
       title: "Netflix Cashback",
       subtitle: "Cashback of September, 2023",
       amount: "$36.24",
@@ -36,7 +37,7 @@ export default function MyCardsPage() {
     },
     {
       id: 2,
-      icon:<RentalIcon/>,
+      icon: <RentalIcon />,
       title: "Rental Income",
       subtitle: "Rental payment from Mr. Dudley.",
       amount: "$800.00",
@@ -45,7 +46,7 @@ export default function MyCardsPage() {
     },
     {
       id: 3,
-      icon:<Grocery/>,
+      icon: <Grocery />,
       title: "Grocery Shopping",
       subtitle: "Purchase of monthly groceries.",
       amount: "$84.14",
@@ -88,98 +89,147 @@ export default function MyCardsPage() {
           </button>
           <button
             onClick={() => setActiveTab("physical")}
-            className={`flex-1  px-4   text-sm font-medium transition-colors ${
+            className={`flex-1   text-sm font-medium transition-colors ${
               activeTab === "physical"
-                ? " text-[#0E121B] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] rounded-[6px]"
-                : " text-[#99A0AE] hover:shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] hover:bg-white hover:rounded-[6px]"
+                ? " bg-white text-[#0E121B] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] rounded-[6px]"
+                : " text-[#99A0AE] hover:shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] bg-white hover:rounded-[6px]"
             }`}
           >
-            Physical
+            Physical <span className="text-[#99A0AE]">(1)</span>
           </button>
         </div>
       </div>
 
       {/* Main Card Display */}
-
-      <div className="border border-[#E1E4EA] rounded-[16px] p-5  bg-white shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between  flex-col relative">
-        <div className="absolute top-0 right-0">
-          <Line1 />
-        </div>
-        <div className="absolute -top-[4px] right-0">
-          <Line2 />
-        </div>
-        <div className="relative z-10 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <div className="flex gap-2 items-center">
-              <CardIcon />
-              <VerveIcon />
+      {activeTab === "virtual" ? (
+        <div className="border border-[#E1E4EA] rounded-[16px] p-5  bg-white shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between  flex-col relative">
+          <div className="absolute top-0 right-0">
+            <Line1 />
+          </div>
+          <div className="absolute -top-[4px] right-0">
+            <Line2 />
+          </div>
+          <div className="relative z-10 flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <div className="flex gap-2 items-center">
+                <div>
+                  {" "}
+               <CardIcon /> 
+                </div>
+                <VerveIcon />
+              </div>
+              <div className="pl-1 pr-2 h-[24px] flex gap-1 items-center">
+                <CheckIcon />
+                <h6 className="text-xs font-medium text-[#525866]">Active</h6>
+              </div>
             </div>
-            <div className="pl-1 pr-2 h-[24px] flex gap-1 items-center">
-              <CheckIcon />
-              <h6 className="text-xs font-medium text-[#525866]">Active</h6>
+            <MastercardIcon />
+          </div>
+
+          <div className="relative z-10">
+            <h3 className="text-sm text-[#525866] leading-5 tracking-[-0.084px] mb-1">
+              Savings Card
+            </h3>
+            <div className="flex items-end justify-between">
+              <h2 className="text-[32px] font-medium text-[#0E121B] -mb-[2px]">
+                $16,058.94
+              </h2>
+              <div className="flex w-[48px] h-[24px] ">
+                <button className="w-6 h-6  border border-[#E1E4EA] rounded-l-[6px]   flex justify-center items-center">
+                  <ArrowLeftIcon />
+                </button>
+                <button className="w-6 h-6  border border-[#E1E4EA] rounded-l-none rounded-r-[6px] flex justify-center items-center">
+                  <ArrowRightIcon />
+                </button>
+              </div>
             </div>
           </div>
-          <MastercardIcon />
         </div>
+      ) : (
+        <div className="border border-[#2A2A2A] rounded-[16px] p-5  bg-black shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between  flex-col relative">
+          <div className="absolute top-0 right-0">
+            <Line1 />
+          </div>
+          <div className="absolute -top-[4px] right-0">
+            <Line2 />
+          </div>
+          <div className="relative z-10 flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <div className="flex gap-2 items-center">
+                <PlatinumIcon />
+                <VerveIcon />
+              </div>
+              <div className="pl-1 pr-2 h-[24px] flex gap-1 items-center">
+                <CheckIcon />
+                <h6 className="text-xs font-medium text-white">Active</h6>
+              </div>
+            </div>
+            <MastercardIcon />
+          </div>
 
-        <div className="relative z-10">
-          <h3 className="text-sm text-[#525866] leading-5 tracking-[-0.084px] mb-1">
-            Savings Card
-          </h3>
-          <div className="flex items-end justify-between">
-            <h2 className="text-[32px] font-medium text-[#0E121B] -mb-[2px]">
-              $16,058.94
-            </h2>
-            <div className="flex w-[48px] h-[24px] ">
-              <button className="w-6 h-6  border border-[#E1E4EA] rounded-l-[6px]   flex justify-center items-center">
-                <ArrowLeftIcon />
-              </button>
-              <button className="w-6 h-6  border border-[#E1E4EA] rounded-l-none rounded-r-[6px] flex justify-center items-center">
-                <ArrowRightIcon />
-              </button>
+          <div className="relative z-10">
+            <h3 className="text-sm text-white leading-5 tracking-[-0.084px] mb-1">
+              Physical Card
+            </h3>
+            <div className="flex items-end justify-between">
+              <h2 className="text-[32px] font-medium text-white -mb-[2px]">
+                $16,058.94
+              </h2>
+              <div className="flex w-[48px] h-[24px] ">
+                <button className="w-6 h-6  border border-[#404040] rounded-l-[6px]   flex justify-center items-center">
+                  <ArrowLeftIcon />
+                </button>
+                <button className="w-6 h-6  border border-[#404040] rounded-l-none rounded-r-[6px] flex justify-center items-center">
+                  <ArrowRightIcon />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Card Details */}
       <div className="my-4">
         <div className="space-y-3">
-          <div className="flex justify-between items-center text-sm ">
-            <span className="text-[#525866]">Card Number</span>
-            <span className="text-[#0E121B] font-medium">• • • • 1234</span>
+          <div className="flex justify-between items-center text-sm text-[#525866] ">
+            <span>Card Number</span>
+            <span className=" text-[#0E121B] font-medium">• • • • 1234</span>
           </div>
-          <div className="flex justify-between items-center text-sm ">
-            <span className="text-[#525866]">Expiry Date</span>
-            <span className="text-[#0E121B] font-medium">06/27</span>
+          <div className="flex justify-between items-center text-sm text-[#525866]">
+            <span>Expiry Date</span>
+            <span className=" text-[#0E121B] font-medium">06/27</span>
           </div>
-          <div className="flex justify-between items-center text-sm ">
-            <span className="text-[#525866]">CVC</span>
-            <span className="text-[#0E121B] font-medium">• • •</span>
+          <div className="flex justify-between items-center text-sm text-[#525866]">
+            <span>CVC</span>
+            <span className=" text-[#0E121B] font-medium">• • •</span>
           </div>
-          <div className="flex justify-between items-center text-sm ">
-            <span className="text-[#525866]">Spending Limit</span>
-            <span className="text-[#0E121B] font-medium">$12,000.00</span>
+          <div className="flex justify-between items-center text-sm text-[#525866]">
+            <span>Spending Limit</span>
+            <span className=" text-[#0E121B] font-medium">$12,000.00</span>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 justify-between py-4 border-b border-[#E1E4EA]">
+        <div
+          className={`flex gap-3 justify-between py-4 border-b ${
+            activeTab === "physical" ? "border-[#404040]" : "border-[#E1E4EA]"
+          }`}
+        >
           <Button
             variant="outline"
-            className="w-full flex justify-center gap-1.5 h-8 items-center text-[#525866] text-sm font-medium leading-5 tracking-[-0.084px]"
+            className="w-full flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040]"
           >
             Unhide
           </Button>
           <Button
             variant="outline"
-            className="w-full text-nowrap flex justify-center gap-1.5 h-8 items-center text-[#525866] text-sm font-medium leading-5 tracking-[-0.084px]"
+            className="w-full text-nowrap flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040]"
           >
             Adjust Limit
           </Button>
           <Button
             variant="outline"
-            className=" w-full flex justify-center gap-1.5 h-8 items-center text-[#525866] text-sm font-medium leading-5 tracking-[-0.084px]"
+            className="w-full flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040]"
           >
             More
           </Button>
