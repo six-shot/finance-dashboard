@@ -1,12 +1,17 @@
 import "./globals.css";
 import localFont from "next/font/local";
-import { Inter } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
 
+
+const geist = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
+});
 const satoshiNormal = localFont({
   src: "../../public/fonts/Satoshi-Regular.otf",
   variable: "--font-satoshi-normal",
@@ -36,7 +41,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={` ${satoshiMedium.variable} ${satoshiNormal.variable} ${satoshiBold.variable} ${inter.variable} ${sfprodisplaymedium.variable} antialiased`}
+        className={` ${satoshiMedium.variable} ${satoshiNormal.variable} ${satoshiBold.variable} ${inter.variable} ${sfprodisplaymedium.variable} ${geist.variable} antialiased`}
       >
         {children}
       </body>

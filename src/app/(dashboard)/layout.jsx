@@ -1,3 +1,4 @@
+import Header from "../components/dashboard/header";
 import Sidebar from "../components/dashboard/sidebar";
 
 const Layout = ({ children }) => {
@@ -8,7 +9,8 @@ const Layout = ({ children }) => {
       </div>
 
       <div className="ml-[280px] flex-100 h-screen text-white">
-        {children}
+        <Header />
+        <div className="p-8"> {children}</div>
       </div>
     </div>
   );

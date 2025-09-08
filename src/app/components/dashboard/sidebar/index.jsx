@@ -203,10 +203,3 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-export function CreatePostButton() {
-  return (
-    <Button type="submit" className=" w-full ">
-      Create post
-    </Button>
-  );
-}
