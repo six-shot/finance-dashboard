@@ -12,7 +12,6 @@ import {
 import finance from "../../../../../public/svgs/finance.svg";
 import { Button } from "../../ui/button";
 import DashboardIcon from "../../ui/jsx/icons/dashboard";
-import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Link from "next/link";
 import CardIcon from "../../ui/jsx/icons/cardIcon";
@@ -77,36 +76,14 @@ const menuItems = [
   },
 ];
 
-const Sidebar = () => {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = window.localStorage.getItem("sidebarExpanded");
-      if (saved === null) {
-        return true;
-      }
-      return JSON.parse(saved);
-    }
-    return true;
-  });
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "sidebarExpanded",
-        JSON.stringify(isSidebarExpanded)
-      );
-    }
-  }, [isSidebarExpanded]);
-
+const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
 
   return (
     <aside
-      className={`flex h-full flex-col justify-between border-r border-[#E1E4EA] relative transition-all duration-300  font-[family-name:var(--font-inter)] ${
-        isSidebarExpanded ? "w-auto flex-1 " : "w-[80px]"
-      }`}
+      className="flex h-full flex-col justify-between border-r border-[#E1E4EA] relative transition-all duration-300 font-[family-name:var(--font-inter)] w-full"
     >
       <div className="relative">
         <div className="top-[29.5%] right-[12px] absolute">

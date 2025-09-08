@@ -46,7 +46,7 @@ export default function Exchange() {
 
       {/* Currency Selection */}
       <div className="flex items-center h-10 justify-between border border-[#E1E4EA] rounded-t-[10px]">
-        <div className="h-full p-2 flex w-full items-center justify-between">
+        <div className="h-full py-2 px-4 flex w-full items-center justify-between">
           {/* From Currency */}
 
           <div className="flex items-center gap-2 ">
