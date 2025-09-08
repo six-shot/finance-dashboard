@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight, Notification, Search } from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
+import Image from "next/image";
 
 export default function Header() {
   return (
@@ -8,7 +9,9 @@ export default function Header() {
       <div className="p-3  h-[88px]">
         <div className="flex justify-between items-center p-3">
           <div className="flex gap-3.5 items-center">
-            <div className="w-[48px] h-[48px] bg-[#C0D5FF] rounded-full"></div>
+            <div className="w-[48px] h-[48px] bg-[#C0D5FF] rounded-full">
+                <Image src="/avatarr.png" width={48} height={48} alt="avatar"/>
+            </div>
             <div className="flex flex-col font-[family-name:var(--font-inter)]">
               <h4 className="text-[18px] text-[#0E121B] leading-6 tracking-[-0.27px] font-medium">
                 Arthur Taylor
