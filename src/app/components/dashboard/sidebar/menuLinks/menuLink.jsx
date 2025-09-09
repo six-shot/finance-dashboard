@@ -5,22 +5,33 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import React from "react";
 
-const MenuLink = ({ label, icon, path, active, isSidebarExpanded }) => {
+const MenuLink = ({
+  label,
+  icon,
+  path,
+  active,
+  isSidebarExpanded,
+  isMobile,
+  setIsMobileMenuOpen,
+}) => {
   const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <>
-      {isSidebarExpanded ? (
+      {isSidebarExpanded || isMobile ? (
         <Link
           href={path}
           className={` h-[36px] px-3 text-[13px]  rounded-lg transition-colors duration-300 ease-in-out font-[family-name:var(--font-inter)] relative ${
             pathname === path
               ? "text-[#0E121B] bg-[#F5F7FA]   "
-              : "text-[#525866] hover:bg-[#F5F7FA14]"
+              : "text-[#525866] hover:bg-[#F5F7FA14] active:bg-[#F5F7FA14]"
           }`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onClick={() =>
+            isMobile && setIsMobileMenuOpen && setIsMobileMenuOpen(false)
+          }
         >
           <div
             className={`

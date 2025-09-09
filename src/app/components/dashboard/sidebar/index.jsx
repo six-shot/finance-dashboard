@@ -77,40 +77,78 @@ const menuItems = [
   },
 ];
 
-const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
+const Sidebar = ({
+  isSidebarExpanded,
+  setIsSidebarExpanded,
+  isMobile,
+  isMobileMenuOpen,
+  setIsMobileMenuOpen,
+}) => {
   const toggleSidebar = () => {
-    setIsSidebarExpanded(!isSidebarExpanded);
+    if (isMobile) {
+      setIsMobileMenuOpen(!isMobileMenuOpen);
+    } else {
+      setIsSidebarExpanded(!isSidebarExpanded);
+    }
   };
 
   return (
-    <aside className="flex h-full flex-col justify-between border-r border-[#E1E4EA] relative transition-all duration-300 font-[family-name:var(--font-inter)] w-full">
+    <aside className="flex h-full flex-col justify-between border-r border-[#E1E4EA] relative transition-all duration-300 font-[family-name:var(--font-inter)] w-full bg-white">
       <div className="relative">
-        <div className="top-[29.5%] right-[12px] absolute">
-          <motion.button
-            type="button"
-            className="absolute flex h-6 w-6 items-center justify-center border border-[#000000] rounded-full"
-            onClick={toggleSidebar}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div
-              key={isSidebarExpanded ? "left" : "right"}
-              initial={{ rotate: 0 }}
-              animate={{ rotate: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+        {/* Desktop toggle button */}
+        {!isMobile && (
+          <div className="top-[29.5%] right-[12px] absolute">
+            <motion.button
+              type="button"
+              className="absolute flex h-6 w-6 items-center justify-center border border-[#000000] rounded-full"
+              onClick={toggleSidebar}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
-              {isSidebarExpanded ? <FaAngleLeft /> : <FaAngleRight />}
-            </motion.div>
-          </motion.button>
-        </div>
+              <motion.div
+                key={isSidebarExpanded ? "left" : "right"}
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                {isSidebarExpanded ? <FaAngleLeft /> : <FaAngleRight />}
+              </motion.div>
+            </motion.button>
+          </div>
+        )}
+
+        {/* Mobile close button */}
+        {isMobile && (
+          <div className="absolute top-4 right-4 z-10">
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Close mobile menu"
+            >
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
         <div className="w-full  ">
           <div className="p-3">
             <div className="flex justify-between items-center p-3">
               <div className="flex gap-3 items-center">
                 <Image src={finance} alt="logo" />
                 <AnimatePresence>
-                  {isSidebarExpanded && (
+                  {(isSidebarExpanded || isMobile) && (
                     <motion.div
                       initial={{ opacity: 0, width: 0 }}
                       animate={{ opacity: 1, width: "auto" }}
@@ -129,7 +167,7 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
                 </AnimatePresence>
               </div>
               <AnimatePresence>
-                {isSidebarExpanded && (
+                {(isSidebarExpanded || isMobile) && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -148,12 +186,12 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
 
           <nav
             className={`py-5  ${
-              isSidebarExpanded
+              isSidebarExpanded || isMobile
                 ? "px-5"
                 : "px-3 flex flex-col items-center justify-center"
             }`}
           >
-            {isSidebarExpanded ? (
+            {isSidebarExpanded || isMobile ? (
               <motion.h5
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -177,6 +215,8 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
                       icon={item.icon}
                       path={item.path}
                       isSidebarExpanded={isSidebarExpanded}
+                      isMobile={isMobile}
+                      setIsMobileMenuOpen={setIsMobileMenuOpen}
                     />
                   ))}
               </li>
@@ -184,12 +224,12 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
           </nav>
           <nav
             className={`  ${
-              isSidebarExpanded
+              isSidebarExpanded || isMobile
                 ? "px-5"
                 : "px-3 flex flex-col items-center justify-center"
             }`}
           >
-            {isSidebarExpanded ? (
+            {isSidebarExpanded || isMobile ? (
               <motion.h5
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -213,6 +253,8 @@ const Sidebar = ({ isSidebarExpanded, setIsSidebarExpanded }) => {
                       icon={item.icon}
                       path={item.path}
                       isSidebarExpanded={isSidebarExpanded}
+                      isMobile={isMobile}
+                      setIsMobileMenuOpen={setIsMobileMenuOpen}
                     />
                   ))}
               </li>

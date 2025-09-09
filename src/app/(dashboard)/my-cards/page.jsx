@@ -114,7 +114,7 @@ export default function MyCardsPage() {
               <div className="flex gap-2 items-center">
                 <div>
                   {" "}
-               <CardIcon /> 
+                  <CardIcon />
                 </div>
                 <VerveIcon />
               </div>
