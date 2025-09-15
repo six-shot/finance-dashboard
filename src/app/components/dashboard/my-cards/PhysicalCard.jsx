@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import {
   MastercardIcon,
@@ -11,9 +11,11 @@ import {
   VerveIcon,
 } from "@/app/components/ui/jsx/icons";
 import { PlatinumIcon } from "../sidebar";
+import CardDetailsModal from "./CardDetailsModal";
 
 export default function PhysicalCard({ card }) {
   const { cardholderName, cardNumber, expiryDate } = card;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="bg-white border border-[#E1E4EA] rounded-[16px] p-4 font-[family-name:var(--font-inter)] shadow-[0_1px_2px_0_rgba(10,13,20,0.03)] relative overflow-hidden">
@@ -28,9 +30,12 @@ export default function PhysicalCard({ card }) {
             </span>
           </div>
         </div>
-        <div className="h-8 px-2.5 bg-white border border-[#E1E4EA] rounded-[8px] shadow-[0_1px_2px_0_rgba(10,13,20,0.03)] text-sm leading-5 tracking-[-0.084px] flex items-center justify-center">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="h-8 px-2.5 bg-white border border-[#E1E4EA] rounded-[8px] shadow-[0_1px_2px_0_rgba(10,13,20,0.03)] text-sm leading-5 tracking-[-0.084px] flex items-center justify-center hover:bg-gray-50 transition-colors"
+        >
           <span className="text-[#525866] leading-5">Details</span>
-        </div>
+        </button>
       </div>
       <div className="border border-[#2A2A2A] rounded-[16px] p-5  bg-black shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between  flex-col relative">
         <div className="absolute top-0 right-0">
@@ -78,6 +83,14 @@ export default function PhysicalCard({ card }) {
           <span className=" text-[#0E121B] font-medium">$12,000.00</span>
         </div>
       </div>
+
+      {/* Card Details Modal */}
+      <CardDetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        card={card}
+        cardType="physical"
+      />
     </div>
   );
 }
