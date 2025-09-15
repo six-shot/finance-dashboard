@@ -1,10 +1,15 @@
 "use client";
 
 import { Button } from "@/app/components/ui/button";
-import { CloseModal, Pattern, SourceAmountIcon } from "@/app/components/ui/jsx/icons";
+import {
+  CloseModal,
+  Pattern,
+  SourceAmountIcon,
+} from "@/app/components/ui/jsx/icons";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import TransferSuccessModal from "./TransferSuccessModal";
 
 const TransferSummary = ({
   transferData,
@@ -12,11 +17,13 @@ const TransferSummary = ({
   onNext,
   onBack,
 }) => {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const handleSendMoney = () => {
     // Here you would typically send the transfer data to your backend
     console.log("Sending transfer:", transferData);
-    // For now, we'll just show a success message or redirect
-    alert("Transfer sent successfully!");
+    // Show success modal instead of alert
+    setShowSuccessModal(true);
   };
 
   const handleDiscard = () => {
@@ -205,6 +212,14 @@ const TransferSummary = ({
           </div>
         </div>
       </div>
+
+      {/* Success Modal Overlay */}
+      {showSuccessModal && (
+        <TransferSuccessModal
+          transferData={transferData}
+          onClose={() => setShowSuccessModal(false)}
+        />
+      )}
     </div>
   );
 };
