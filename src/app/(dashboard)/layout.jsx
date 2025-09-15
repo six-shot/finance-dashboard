@@ -2,11 +2,43 @@
 import Header from "../components/dashboard/header";
 import Sidebar from "../components/dashboard/sidebar";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const Layout = ({ children }) => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname();
+
+  // Get header content based on current page
+  const getHeaderContent = () => {
+    switch (pathname) {
+      case "/my-cards":
+        return {
+          title: "My Cards",
+          description: "Organize and access your payment cards.",
+          showCardIcon: true,
+        };
+      case "/dashboard":
+        return {
+          title: "Arthur Taylor",
+          description: "Welcome back to Apex 👋🏻",
+          showCardIcon: false,
+          imageSrc: "/avatarr.png",
+          imageAlt: "avatar",
+        };
+      default:
+        return {
+          title: "Arthur Taylor",
+          description: "Welcome back to Apex 👋🏻",
+          showCardIcon: false,
+          imageSrc: "/avatarr.png",
+          imageAlt: "avatar",
+        };
+    }
+  };
+
+  const headerContent = getHeaderContent();
 
   // Check if device is mobile/tablet
   useEffect(() => {
@@ -76,6 +108,11 @@ const Layout = ({ children }) => {
               isMobile={isMobile}
               onMobileMenuToggle={toggleMobileMenu}
               isMobileMenuOpen={isMobileMenuOpen}
+              title={headerContent.title}
+              description={headerContent.description}
+              showCardIcon={headerContent.showCardIcon}
+              imageSrc={headerContent.imageSrc}
+              imageAlt={headerContent.imageAlt}
             />
           </div>
         </div>

@@ -1,6 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { ArrowRight, Notification, Search } from "../../ui/jsx/icons";
+import {
+  ArrowRight,
+  Notification,
+  Search,
+  CardHeaderIcon,
+} from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
 import Image from "next/image";
 
@@ -8,6 +13,11 @@ export default function Header({
   isMobile,
   onMobileMenuToggle,
   isMobileMenuOpen,
+  title = "Arthur Taylor",
+  description = "Welcome back to Apex 👋🏻",
+  showCardIcon = false,
+  imageSrc = "/avatarr.png",
+  imageAlt = "avatar",
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -62,21 +72,25 @@ export default function Header({
               </button>
             )}
 
-            <div className="w-8 h-8 sm:w-[48px] sm:h-[48px] bg-[#C0D5FF] rounded-full flex-shrink-0">
-              <Image
-                src="/avatarr.png"
-                width={48}
-                height={48}
-                alt="avatar"
-                className="w-full h-full object-cover rounded-full"
-              />
+            <div className="w-8 h-8 sm:w-[48px] sm:h-[48px] bg-[#EBF1FF] rounded-full flex-shrink-0 flex items-center justify-center">
+              {showCardIcon ? (
+                <CardHeaderIcon />
+              ) : (
+                <Image
+                  src={imageSrc}
+                  width={48}
+                  height={48}
+                  alt={imageAlt}
+                  className="w-full h-full object-cover rounded-full"
+                />
+              )}
             </div>
             <div className="flex flex-col font-[family-name:var(--font-inter)] min-w-0 flex-1">
               <h4 className="text-sm sm:text-[18px] text-[#0E121B] leading-5 sm:leading-6 tracking-[-0.27px] font-medium truncate">
-                Arthur Taylor
+                {title}
               </h4>
               <p className="text-xs sm:text-sm text-[#525866] leading-4 sm:leading-5 tracking-[-0.084px] truncate">
-                Welcome back to Apex 👋🏻
+                {description}
               </p>
             </div>
           </div>
