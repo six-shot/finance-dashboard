@@ -19,6 +19,14 @@ const Layout = ({ children }) => {
           description: "Organize and access your payment cards.",
           showCardIcon: true,
         };
+      case "/transaction":
+        return {
+          title: "Transactions",
+          description:
+            "Track your financial transactions to stay in control of your income and expenses.",
+          showCardIcon: true,
+          isTransactionPage: true,
+        };
       case "/dashboard":
         return {
           title: "Arthur Taylor",
@@ -113,6 +121,7 @@ const Layout = ({ children }) => {
               showCardIcon={headerContent.showCardIcon}
               imageSrc={headerContent.imageSrc}
               imageAlt={headerContent.imageAlt}
+              isTransactionPage={headerContent.isTransactionPage}
             />
           </div>
         </div>

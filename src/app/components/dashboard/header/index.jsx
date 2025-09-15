@@ -18,6 +18,7 @@ export default function Header({
   showCardIcon = false,
   imageSrc = "/avatarr.png",
   imageAlt = "avatar",
+  isTransactionPage = false,
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -104,9 +105,20 @@ export default function Header({
                 <div className="absolute top-[1px] right-[4px] w-[5px] h-[5px] bg-[#FB3748] rounded-full drop-shadow-[0_1px_2px_rgba(10,_13,_20,_0.03)]"></div>
               </div>
             </div>
-            <Button className="hidden md:flex text-xs sm:text-sm">
-              Move Money <ArrowRight />
-            </Button>
+            {isTransactionPage ? (
+              <>
+                <Button className="hidden md:flex text-xs sm:text-sm bg-white border border-gray-200 text-gray-700 hover:bg-gray-50">
+                  Export
+                </Button>
+                <Button className="hidden md:flex text-xs sm:text-sm bg-blue-600 text-white hover:bg-blue-700">
+                  Add Team Member
+                </Button>
+              </>
+            ) : (
+              <Button className="hidden md:flex text-xs sm:text-sm">
+                Move Money <ArrowRight />
+              </Button>
+            )}
           </div>
         </div>
       </div>

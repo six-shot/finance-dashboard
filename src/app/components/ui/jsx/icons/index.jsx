@@ -794,7 +794,6 @@ export const CaretDownIcon = () => (
   </svg>
 );
 
-
 export const ExpiredIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -810,7 +809,6 @@ export const ExpiredIcon = () => (
   </svg>
 );
 
-
 export const CloseModal = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -821,6 +819,35 @@ export const CloseModal = () => (
   >
     <path
       d="M5.00005 3.93955L8.71255 0.227051L9.77305 1.28755L6.06055 5.00005L9.77305 8.71255L8.71255 9.77305L5.00005 6.06055L1.28755 9.77305L0.227051 8.71255L3.93955 5.00005L0.227051 1.28755L1.28755 0.227051L5.00005 3.93955Z"
+      fill="#525866"
+    />
+  </svg>
+);
+
+export const ExportAs = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <path
+      d="M10.75 8.5H14.5L10 13L5.5 8.5H9.25V3.25H10.75V8.5ZM4 15.25H16V10H17.5V16C17.5 16.1989 17.421 16.3897 17.2803 16.5303C17.1397 16.671 16.9489 16.75 16.75 16.75H3.25C3.05109 16.75 2.86032 16.671 2.71967 16.5303C2.57902 16.3897 2.5 16.1989 2.5 16V10H4V15.25Z"
+      fill="#525866"
+    />
+  </svg>
+);
+export const UpDownIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <path
+      d="M14.1666 7.91667L9.99992 3.75L5.83325 7.91667H14.1666ZM14.1666 12.0833L9.99992 16.25L5.83325 12.0833H14.1666Z"
       fill="#525866"
     />
   </svg>

@@ -1,0 +1,511 @@
+"use client";
+import React, { useState } from "react";
+import { UpDownIcon } from "../../ui/jsx/icons";
+
+const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
+  const [currentPage, setCurrentPage] = useState(2);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
+
+  // Transaction data from the image
+  const transactions = [
+    {
+      id: 1,
+      icon: "chart",
+      name: "Investment Return",
+      amount: 560.0,
+      type: "income",
+      account: "Checking",
+      date: "12 September",
+      paymentMethod: "Wire",
+      paymentIcon: "globe",
+    },
+    {
+      id: 2,
+      icon: "avatar",
+      name: "James Brown",
+      amount: -35.2,
+      type: "expense",
+      account: "Ops Payroll",
+      date: "12 September",
+      paymentMethod: "Money Transfer",
+      paymentIcon: "transfer",
+      avatar: "J",
+    },
+    {
+      id: 3,
+      icon: "clock",
+      name: "Stock Dividend",
+      amount: 1250.0,
+      type: "income",
+      account: "AP",
+      date: "12 September",
+      paymentMethod: "ACH",
+      paymentIcon: "bank",
+    },
+    {
+      id: 4,
+      icon: "avatar",
+      name: "Sophia Williams",
+      amount: 150.0,
+      type: "income",
+      account: "Checking",
+      date: "12 September",
+      paymentMethod: "Money Transfer",
+      paymentIcon: "transfer",
+      avatar: "S",
+    },
+    {
+      id: 5,
+      icon: "monitor",
+      name: "Freelance Income",
+      amount: 250.0,
+      type: "income",
+      account: "Checking",
+      date: "12 September",
+      paymentMethod: "ACH",
+      paymentIcon: "bank",
+    },
+    {
+      id: 6,
+      icon: "avatar",
+      name: "Emma Wright",
+      amount: -21.8,
+      type: "expense",
+      account: "AP",
+      date: "12 September",
+      paymentMethod: "Wire",
+      paymentIcon: "globe",
+      avatar: "E",
+    },
+    {
+      id: 7,
+      icon: "lightning",
+      name: "Utilities Payment",
+      amount: -63.75,
+      type: "expense",
+      account: "Ops Payroll",
+      date: "12 September",
+      paymentMethod: "ACH",
+      paymentIcon: "bank",
+    },
+    {
+      id: 8,
+      icon: "avatar",
+      name: "Matthew Johnson",
+      amount: -45.0,
+      type: "expense",
+      account: "Checking",
+      date: "12 September",
+      paymentMethod: "Money Transfer",
+      paymentIcon: "transfer",
+      avatar: "M",
+    },
+  ];
+
+  // Filter transactions based on active tab
+  const filteredTransactions = transactions.filter((transaction) => {
+    if (activeTab === "All") return true;
+    if (activeTab === "Income") return transaction.type === "income";
+    if (activeTab === "Expenses") return transaction.type === "expense";
+    return true;
+  });
+
+  // Filter by search term
+  const searchFilteredTransactions = filteredTransactions.filter(
+    (transaction) =>
+      transaction.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const renderIcon = (transaction) => {
+    if (transaction.icon === "avatar") {
+      return (
+        <div
+          className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${
+            transaction.avatar === "J"
+              ? "bg-gray-400"
+              : transaction.avatar === "S"
+              ? "bg-yellow-400"
+              : transaction.avatar === "E"
+              ? "bg-gray-400"
+              : "bg-purple-400"
+          }`}
+        >
+          {transaction.avatar}
+        </div>
+      );
+    }
+
+    if (transaction.icon === "chart") {
+      return (
+        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+          <svg
+            className="w-4 h-4 text-blue-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+            />
+          </svg>
+        </div>
+      );
+    }
+
+    if (transaction.icon === "clock") {
+      return (
+        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+          <svg
+            className="w-4 h-4 text-green-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+      );
+    }
+
+    if (transaction.icon === "monitor") {
+      return (
+        <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+          <svg
+            className="w-4 h-4 text-purple-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            />
+          </svg>
+        </div>
+      );
+    }
+
+    if (transaction.icon === "lightning") {
+      return (
+        <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+          <svg
+            className="w-4 h-4 text-yellow-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+        </div>
+      );
+    }
+  };
+
+  const renderPaymentIcon = (paymentIcon) => {
+    if (paymentIcon === "globe") {
+      return (
+        <svg
+          className="w-4 h-4 text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"
+          />
+        </svg>
+      );
+    }
+
+    if (paymentIcon === "transfer") {
+      return (
+        <svg
+          className="w-4 h-4 text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M7 16l-4-4m0 0l4-4m-4 4h18"
+          />
+        </svg>
+      );
+    }
+
+    if (paymentIcon === "bank") {
+      return (
+        <svg
+          className="w-4 h-4 text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+          />
+        </svg>
+      );
+    }
+  };
+
+  return (
+    <div className="bg-white  overflow-hidden ">
+      {/* Table Header */}
+      <div className=" ">
+        <div className="flex items-center text-sm font-medium">
+          <div className="flex items-center gap-2.5 h-[36px] bg-[#F5F7FA] w-[328px] px-3 rounded-l-[8px]">
+            <div className="p-[3.5px]">
+              <div className="bg-[#E1E4EA] p-[2px] rounded-[4px]">
+                <div className="w-[13px] h-[13px] bg-white shadow-[0_2px_2px_0_rgba(27,28,29,0.12)] rounded-[4px]" />
+              </div>
+            </div>
+            <span className="text-[#525866] text-sm leading-5 tracking-[-0.084px]">
+              To / From
+            </span>
+            <div className="mr-[2px]">
+              <UpDownIcon />
+            </div>
+          </div>
+          <div
+            className="flex items-center gap-2.5 h-[36px] bg-[#F5F7FA] px-3"
+            style={{ width: "148px" }}
+          >
+            <span className="text-[#525866] text-sm leading-5 tracking-[-0.084px]">
+              Amount
+            </span>
+            <div className="mr-[2px]">
+              <UpDownIcon />
+            </div>
+          </div>
+          <div
+            className="flex items-center gap-2.5 h-[36px] bg-[#F5F7FA] px-3"
+            style={{ width: "188px" }}
+          >
+            <span className="text-[#525866] text-sm leading-5 tracking-[-0.084px]">
+              Account
+            </span>
+            <div className="mr-[2px]">
+              <UpDownIcon />
+            </div>
+          </div>
+          <div
+            className="flex items-center gap-2.5 h-[36px] bg-[#F5F7FA] px-3"
+            style={{ width: "188px" }}
+          >
+            <span className="text-[#525866] text-sm leading-5 tracking-[-0.084px]">
+              Date & Time
+            </span>
+            <div className="mr-[2px]">
+              <UpDownIcon />
+            </div>
+          </div>
+          <div
+            className="flex items-center gap-2.5 h-[36px] bg-[#F5F7FA] px-3 "
+            style={{ width: "188px" }}
+          >
+            <span className="text-[#525866] text-sm leading-5 tracking-[-0.084px]">
+              Payment Method
+            </span>
+            <div className="mr-[2px]">
+              <UpDownIcon />
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+
+      {/* Table Body */}
+      <div className=" mt-2 gap-[1.5px]">
+        {searchFilteredTransactions.map((transaction) => (
+          <div key={transaction.id} className="px-3 h-[48px] flex items-center">
+            <div className="flex gap-3 items-center">
+              <div className="p-[3.5px]">
+                <div className="bg-[#E1E4EA] p-[2px] rounded-[4px]">
+                  <div className="w-[13px] h-[13px] bg-white shadow-[0_2px_2px_0_rgba(27,28,29,0.12)] rounded-[4px]" />
+                </div>
+              </div>
+              <div className="w-[32px] h-[32px] flex items-center justify-center border border-[#E1E4EA] rounded-full flex-shrink-0">
+                {renderIcon(transaction)}
+              </div>
+              <div
+                className={`text-sm font-semibold ${
+                  transaction.amount < 0 ? "text-red-600" : "text-gray-900"
+                }`}
+                style={{ width: "148px" }}
+              >
+                {transaction.amount < 0 ? "-" : ""}$
+                {Math.abs(transaction.amount).toFixed(2)}
+              </div>
+              <div className="text-sm text-gray-600" style={{ width: "188px" }}>
+                {transaction.account}
+              </div>
+              <div className="text-sm text-gray-600" style={{ width: "188px" }}>
+                {transaction.date}
+              </div>
+              <div
+                className="flex items-center gap-2"
+                style={{ width: "188px" }}
+              >
+                {renderPaymentIcon(transaction.paymentIcon)}
+                <span className="text-sm text-gray-600">
+                  {transaction.paymentMethod}
+                </span>
+              </div>
+              <div className="flex justify-end w-12">
+                <button className="p-1 hover:bg-gray-100 rounded">
+                  <svg
+                    className="w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-700">Page {currentPage} of 16</div>
+
+          <div className="flex items-center gap-2">
+            <button className="p-2 hover:bg-gray-200 rounded">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button className="p-2 hover:bg-gray-200 rounded">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
+            <div className="flex items-center gap-1">
+              {[1, 2, 3, 4, 5].map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-8 h-8 text-sm rounded ${
+                    page === currentPage
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+              <span className="px-2 text-gray-500">...</span>
+              <button className="w-8 h-8 text-sm text-gray-700 hover:bg-gray-200 rounded">
+                16
+              </button>
+            </div>
+
+            <button className="p-2 hover:bg-gray-200 rounded">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+            <button className="p-2 hover:bg-gray-200 rounded">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-700">{itemsPerPage} / page</span>
+            <svg
+              className="w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TransactionTable;
