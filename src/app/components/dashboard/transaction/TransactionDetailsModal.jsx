@@ -11,19 +11,17 @@ import {
 } from "@/app/components/ui/jsx/icons";
 
 const TransactionDetailsModal = ({ isOpen, onClose, transaction }) => {
-  if (!transaction) return null;
-
   const {
-    id,
-    name,
-    amount,
-    account,
-    date,
-    paymentMethod,
-    paymentIcon,
-    type,
-    avatar,
-  } = transaction;
+    id = 0,
+    name = "",
+    amount = 0,
+    account = "",
+    date = "",
+    paymentMethod = "",
+    paymentIcon = null,
+    type = "expense",
+    avatar = "",
+  } = transaction || {};
 
   // Generate transaction ID
   const transactionId = `APX${Math.random().toString().substr(2, 7)}`;
@@ -65,8 +63,8 @@ const TransactionDetailsModal = ({ isOpen, onClose, transaction }) => {
       isOpen={isOpen}
       onClose={onClose}
       title="Transaction Details"
+      fullHeight={true}
       size="sm"
-      className="right-0 top-0 h-full transform translate-x-0"
     >
       <div className="space-y-6 h-full font-[family-name:var(--font-inter)]">
         {/* AMOUNT & ACCOUNT Section */}

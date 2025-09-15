@@ -25,11 +25,6 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedTransaction(null);
-  };
-
   // Transaction data from the image
   const transactions = [
     {
@@ -516,7 +511,10 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
       {/* Transaction Details Modal */}
       <TransactionDetailsModal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedTransaction(null);
+        }}
         transaction={selectedTransaction}
       />
     </div>
