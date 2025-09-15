@@ -1,10 +1,34 @@
 "use client";
 import React, { useState } from "react";
-import { UpDownIcon } from "../../ui/jsx/icons";
+import {
+  ACHIcon,
+  DoubleNextArrow,
+  DoublePrevArrow,
+  InvestmentIcon,
+  MoneyTransfer,
+  NextArrow,
+  PrevArrow,
+  ThreeDot,
+  UpDownIcon,
+  WireIcon,
+} from "../../ui/jsx/icons";
+import TransactionDetailsModal from "./TransactionDetailsModal";
 
 const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
   const [currentPage, setCurrentPage] = useState(2);
   const [itemsPerPage, setItemsPerPage] = useState(7);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleTransactionClick = (transaction) => {
+    setSelectedTransaction(transaction);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedTransaction(null);
+  };
 
   // Transaction data from the image
   const transactions = [
@@ -17,7 +41,7 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
       account: "Checking",
       date: "12 September",
       paymentMethod: "Wire",
-      paymentIcon: "globe",
+      paymentIcon: InvestmentIcon,
     },
     {
       id: 2,
@@ -217,6 +241,10 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
   };
 
   const renderPaymentIcon = (paymentIcon) => {
+    if (paymentIcon === InvestmentIcon) {
+      return <InvestmentIcon />;
+    }
+
     if (paymentIcon === "globe") {
       return (
         <svg
@@ -334,62 +362,73 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
               <UpDownIcon />
             </div>
           </div>
-          <div></div>
+          <div className="w-[72px] bg-[#F5F7FA] h-[36px] rounded-r-[10px]"></div>
         </div>
       </div>
 
       {/* Table Body */}
       <div className=" mt-2 gap-[1.5px]">
         {searchFilteredTransactions.map((transaction) => (
-          <div key={transaction.id} className="px-3 h-[48px] flex items-center">
-            <div className="flex gap-3 items-center">
-              <div className="p-[3.5px]">
-                <div className="bg-[#E1E4EA] p-[2px] rounded-[4px]">
-                  <div className="w-[13px] h-[13px] bg-white shadow-[0_2px_2px_0_rgba(27,28,29,0.12)] rounded-[4px]" />
+          <div
+            key={transaction.id}
+            className="px-3 h-[48px] flex items-center border-b border-[#E1E4EA] cursor-pointer hover:bg-gray-50 transition-colors"
+            onClick={() => handleTransactionClick(transaction)}
+          >
+            <div className="flex items-center">
+              <div className="flex gap-3 items-center w-[328px]">
+                <div className="p-[3.5px]">
+                  <div className="bg-[#E1E4EA] p-[2px] rounded-[4px]">
+                    <div className="w-[13px] h-[13px] bg-white shadow-[0_2px_2px_0_rgba(27,28,29,0.12)] rounded-[4px]" />
+                  </div>
                 </div>
-              </div>
-              <div className="w-[32px] h-[32px] flex items-center justify-center border border-[#E1E4EA] rounded-full flex-shrink-0">
-                {renderIcon(transaction)}
+                <div className="w-[32px] h-[32px] flex items-center justify-center border border-[#E1E4EA] rounded-full flex-shrink-0">
+                  {renderIcon(transaction)}
+                </div>
+                <h4 className="text-[#0E121B] text-sm leading-5 trackin-[-0.084px]">
+                  {transaction.name}
+                </h4>
               </div>
               <div
-                className={`text-sm font-semibold ${
-                  transaction.amount < 0 ? "text-red-600" : "text-gray-900"
-                }`}
+                className="text-sm text-[#525866] leading-5 tracking-[-0.084px]"
                 style={{ width: "148px" }}
               >
                 {transaction.amount < 0 ? "-" : ""}$
                 {Math.abs(transaction.amount).toFixed(2)}
               </div>
-              <div className="text-sm text-gray-600" style={{ width: "188px" }}>
+              <div
+                className="text-sm text-[#525866] leading-5 tracking-[-0.084px]"
+                style={{ width: "188px" }}
+              >
                 {transaction.account}
               </div>
-              <div className="text-sm text-gray-600" style={{ width: "188px" }}>
+              <div
+                className="text-sm text-[#525866] leading-5 tracking-[-0.084px]"
+                style={{ width: "188px" }}
+              >
                 {transaction.date}
               </div>
               <div
-                className="flex items-center gap-2"
+                className="flex items-center gap-3"
                 style={{ width: "188px" }}
               >
-                {renderPaymentIcon(transaction.paymentIcon)}
-                <span className="text-sm text-gray-600">
+                <span className="w-[32px] h-[32px] border border-[#E1E4EA] bg-white shadow-[0 1px 2px 0 rgba(10, 13, 20, 0.03)] rounded-full flex items-center justify-center">
+                  {transaction.paymentMethod === "Wire" ? (
+                    <WireIcon />
+                  ) : transaction.paymentMethod === "Money Transfer" ? (
+                    <MoneyTransfer />
+                  ) : transaction.paymentMethod === "ACH" ? (
+                    <ACHIcon />
+                  ) : transaction.paymentIcon === InvestmentIcon ? (
+                    <InvestmentIcon />
+                  ) : null}
+                </span>
+                <span className="text-[#525866] text-sm leading-5 tracking-[-0.084px]">
                   {transaction.paymentMethod}
                 </span>
               </div>
               <div className="flex justify-end w-12">
                 <button className="p-1 hover:bg-gray-100 rounded">
-                  <svg
-                    className="w-4 h-4 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                    />
-                  </svg>
+                  <ThreeDot />
                 </button>
               </div>
             </div>
@@ -398,77 +437,46 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
       </div>
 
       {/* Pagination */}
-      <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+      <div className="px-6 py-4 mt-[88px] ">
         <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-700">Page {currentPage} of 16</div>
+          <div className="text-sm text-[#525866]">Page {currentPage} of 16</div>
 
           <div className="flex items-center gap-2">
-            <button className="p-2 hover:bg-gray-200 rounded">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-                />
-              </svg>
-            </button>
-            <button className="p-2 hover:bg-gray-200 rounded">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
+            <div className="w-8 h-8 flex justify-center items-center">
+              <DoublePrevArrow />
+            </div>
+            <div className="w-8 h-8 flex justify-center items-center">
+              <PrevArrow />
+            </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2 ml-2">
               {[1, 2, 3, 4, 5].map((page) => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
                   className={`w-8 h-8 text-sm rounded ${
                     page === currentPage
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-700 hover:bg-gray-200"
+                      ? "bg-[#F5F7FA] text-[#525866]"
+                      : "text-[#525866] hover:bg-[#F5F7FA] border border-[#E1E4EA]"
                   }`}
                 >
                   {page}
                 </button>
               ))}
-              <span className="px-2 text-gray-500">...</span>
-              <button className="w-8 h-8 text-sm text-gray-700 hover:bg-gray-200 rounded">
+              <span className="w-8 h-8 rounded flex justify-center items-center border border-[#E1E4EA] text-[#525866]">
+                ...
+              </span>
+              <button className="w-8 h-8 text-sm border border-[#E1E4EA] text-[#525866] rounded">
                 16
               </button>
             </div>
 
-            <button className="p-2 hover:bg-gray-200 rounded">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
+            <div className="w-8 h-8 flex justify-center items-center ml-2">
+              <DoubleNextArrow />
+            </div>
+            <div className="w-8 h-8 flex justify-center items-center">
+              <NextArrow />
+            </div>
             <button className="p-2 hover:bg-gray-200 rounded">
               <svg
                 className="w-4 h-4"
@@ -486,8 +494,8 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-700">{itemsPerPage} / page</span>
+          <div className="flex items-center gap-[2px] h-8 border border-[#E1E4EA] text-[#525866] rounded-[8px] px-2.5">
+            <span className="text-sm">{itemsPerPage} / page</span>
             <svg
               className="w-4 h-4 text-gray-400"
               fill="none"
@@ -504,6 +512,13 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
           </div>
         </div>
       </div>
+
+      {/* Transaction Details Modal */}
+      <TransactionDetailsModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        transaction={selectedTransaction}
+      />
     </div>
   );
 };

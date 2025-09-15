@@ -5,6 +5,8 @@ import {
   Notification,
   Search,
   CardHeaderIcon,
+  ExportTransaction,
+  PlusIcon,
 } from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
 import Image from "next/image";
@@ -107,10 +109,13 @@ export default function Header({
             </div>
             {isTransactionPage ? (
               <>
-                <Button className="hidden md:flex text-xs sm:text-sm bg-white border border-gray-200 text-gray-700 hover:bg-gray-50">
-                  Export
+                <Button variant="outline" className="hidden md:flex  ">
+                  <ExportTransaction /> Export
                 </Button>
-                <Button className="hidden md:flex text-xs sm:text-sm bg-blue-600 text-white hover:bg-blue-700">
+                <Button className="hidden md:flex ">
+                  <div className="[&_svg_path]:fill-white">
+                    <PlusIcon />
+                  </div>
                   Add Team Member
                 </Button>
               </>
