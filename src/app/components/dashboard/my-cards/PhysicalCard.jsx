@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "@/app/components/ui/button";
+
 import {
   MastercardIcon,
   ChipIcon,
@@ -9,7 +9,7 @@ import {
   Line1,
   Line2,
   VerveIcon,
-} from "@/app/components/ui/jsx/icons";
+} from "../../ui/jsx/icons";
 import { PlatinumIcon } from "../sidebar";
 import CardDetailsModal from "./CardDetailsModal";
 

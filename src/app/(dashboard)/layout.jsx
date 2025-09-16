@@ -27,6 +27,18 @@ const Layout = ({ children }) => {
           showCardIcon: true,
           isTransactionPage: true,
         };
+      case "/payments":
+        return {
+          title: "Payments",
+          description: "Manage your payments and recurring bills",
+          showCardIcon: true,
+        };
+      case "/exchange":
+        return {
+          title: "Currency Exchange",
+          description: "Convert currencies at competitive rates",
+          showCardIcon: true,
+        };
       case "/dashboard":
         return {
           title: "Arthur Taylor",

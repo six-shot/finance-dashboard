@@ -1,5 +1,5 @@
 "use client";
-import { CaretLeft } from "@/app/components/ui/jsx/icons";
+import { CaretLeft } from "../../../ui/jsx/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";

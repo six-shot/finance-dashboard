@@ -6,7 +6,7 @@ import {
   FilterIcon,
   SortIcon,
   CaretDownIcon,
-} from "@/app/components/ui/jsx/icons";
+} from "../../ui/jsx/icons";
 
 export default function FilterBar({ children }) {
   return (

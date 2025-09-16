@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Modal from "@/app/components/ui/Modal";
-import { Button } from "@/app/components/ui/button";
+import Modal from "../../ui/Modal";
+import { Button } from "../../ui/button";
 import {
   CardIcon,
   CheckIcon,
@@ -17,7 +17,7 @@ import {
   RentalIcon,
   Grocery,
   Clock,
-} from "@/app/components/ui/jsx/icons";
+} from "../../ui/jsx/icons";
 import { PlatinumIcon } from "../sidebar";
 
 const CardDetailsModal = ({ isOpen, onClose, card, cardType = "virtual" }) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/app/components/ui/button";
+import { Button } from "../../../ui/button";
 import {
   CaretDownIcon,
   CloseModal,
@@ -8,7 +8,7 @@ import {
   PlusIcon,
   RecipientIcon,
   SearchIcon,
-} from "@/app/components/ui/jsx/icons";
+} from "../../../ui/jsx/icons";
 
 import Link from "next/link";
 import React, { useState } from "react";

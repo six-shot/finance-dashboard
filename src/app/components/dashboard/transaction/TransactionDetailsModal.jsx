@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import Modal from "@/app/components/ui/Modal";
-import { Button } from "@/app/components/ui/button";
+import Modal from "../../ui/Modal";
+import { Button } from "../../ui/button";
 import {
   MoneyTransfer,
   WireIcon,
   ACHIcon,
   InvestmentIcon,
-} from "@/app/components/ui/jsx/icons";
+} from "../../ui/jsx/icons";
 
 const TransactionDetailsModal = ({ isOpen, onClose, transaction }) => {
   const {

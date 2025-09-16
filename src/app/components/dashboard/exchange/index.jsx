@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@/app/components/ui/button";
+
 import {
   CaretDown,
   ExchangeIcon,
   SwapIcon,
-} from "@/app/components/ui/jsx/icons";
+} from "../../ui/jsx/icons";
+import { Button } from "../../ui/button";
 
 export default function Exchange() {
   const [fromCurrency, setFromCurrency] = useState("USD");

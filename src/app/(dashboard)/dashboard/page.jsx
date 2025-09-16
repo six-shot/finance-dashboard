@@ -1,11 +1,9 @@
-import { Button } from "@/app/components/ui/button";
-import { PlusIcon, WalletIcon } from "@/app/components/ui/jsx/icons";
 import React from "react";
 
-import BudgetOverview from "@/app/components/dashboard/budget-overview";
-import SpendingSummary from "@/app/components/dashboard/spending-summary";
-import Exchange from "@/app/components/dashboard/exchange";
-import Cards from "@/app/components/dashboard/cards";
+import BudgetOverview from "../../components/dashboard/budget-overview";
+import SpendingSummary from "../../components/dashboard/spending-summary";
+import Exchange from "../../components/dashboard/exchange";
+import Cards from "../../components/dashboard/cards";
 
 export default function Dashboard() {
   return (

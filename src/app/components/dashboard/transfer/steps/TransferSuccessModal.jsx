@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/app/components/ui/button";
-import { CloseModal, Pattern } from "@/app/components/ui/jsx/icons";
+import { Button } from "../../../ui/button";
+import { CloseModal, Pattern } from "../../../ui/jsx/icons";
 import Link from "next/link";
 
 const TransferSuccessModal = ({ transferData, onClose }) => {

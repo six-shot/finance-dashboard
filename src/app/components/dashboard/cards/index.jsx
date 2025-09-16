@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "../../ui/button";
 
 import {
   ArrowLeftIcon,
+  ArrowRightIcon,
   CardIcon,
   CheckIcon,
   Clock,
@@ -17,10 +18,9 @@ import {
   RentalIcon,
   VerveIcon,
   WalletIcon,
-} from "@/app/components/ui/jsx/icons";
-import { ArrowRightIcon } from "@/app/components/ui/jsx/icons";
+} from "../../ui/jsx/icons";
 import Image from "next/image";
-import { PlatinumIcon } from "@/app/components/dashboard/sidebar";
+import { PlatinumIcon } from "../sidebar";
 
 export default function Cards() {
   const [activeTab, setActiveTab] = useState("virtual");

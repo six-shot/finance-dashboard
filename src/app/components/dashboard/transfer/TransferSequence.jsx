@@ -6,6 +6,7 @@ import MethodDetails from "./steps/MethodDetails";
 import SourceAmount from "./steps/SourceAmount";
 import TransferSummary from "./steps/TransferSummary";
 import { CaretLeft } from "../../ui/jsx/icons";
+import { Button } from "../../ui/button";
 
 const TransferSequence = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -121,17 +122,29 @@ const TransferSequence = () => {
           </div>
 
           {/* Help Section */}
-          <div className="mt-8 space-y-4">
-            <div className="text-sm text-gray-600">
+          <div className="">
+            <div className="text-sm text-[#525866] leading-5 tracking-[-0.084px] text-center">
               Having trouble with transfer?
             </div>
-            <button className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 flex items-center justify-center space-x-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+            <Button
+              variant="outline"
+              className="w-full flex justify-center items-center mt-4 mb-3"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="20"
+                viewBox="0 0 21 20"
+                fill="none"
+              >
+                <path
+                  d="M10.5 4C8.9087 4 7.38258 4.63214 6.25736 5.75736C5.13214 6.88258 4.5 8.4087 4.5 10H6.75C7.14782 10 7.52936 10.158 7.81066 10.4393C8.09196 10.7206 8.25 11.1022 8.25 11.5V15.25C8.25 15.6478 8.09196 16.0294 7.81066 16.3107C7.52936 16.592 7.14782 16.75 6.75 16.75H4.5C4.10218 16.75 3.72064 16.592 3.43934 16.3107C3.15804 16.0294 3 15.6478 3 15.25V10C3 5.85775 6.35775 2.5 10.5 2.5C14.6423 2.5 18 5.85775 18 10V15.25C18 15.6478 17.842 16.0294 17.5607 16.3107C17.2794 16.592 16.8978 16.75 16.5 16.75H14.25C13.8522 16.75 13.4706 16.592 13.1893 16.3107C12.908 16.0294 12.75 15.6478 12.75 15.25V11.5C12.75 11.1022 12.908 10.7206 13.1893 10.4393C13.4706 10.158 13.8522 10 14.25 10H16.5C16.5 8.4087 15.8679 6.88258 14.7426 5.75736C13.6174 4.63214 12.0913 4 10.5 4ZM4.5 11.5V15.25H6.75V11.5H4.5ZM14.25 11.5V15.25H16.5V11.5H14.25Z"
+                  fill="#525866"
+                />
               </svg>
               <span>Contact</span>
-            </button>
-            <div className="text-xs text-gray-500 text-center">
+            </Button>
+            <div className="text-xs text-[#99A0AE] text-center">
               © 2023 Apex Financial
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "../../ui/button";
 import {
   CardIcon,
   CheckIcon,
@@ -11,7 +11,7 @@ import {
   VerveIcon,
   CardIconn,
   ExpiredIcon,
-} from "@/app/components/ui/jsx/icons";
+} from "../../ui/jsx/icons";
 import CardDetailsModal from "./CardDetailsModal";
 
 export default function VirtualCard({ card, isActive = true }) {

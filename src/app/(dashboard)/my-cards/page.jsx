@@ -1,5 +1,5 @@
 import React from "react";
-import MyCardsGrid from "@/app/components/dashboard/my-cards/MyCardsGrid";
+import MyCardsGrid from "../../components/dashboard/my-cards/MyCardsGrid";
 
 export default function MyCardsPage() {
   return (

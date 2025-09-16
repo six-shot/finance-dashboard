@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import TransactionFilters from "../../components/dashboard/transaction/TransactionFilters";
 import TransactionTable from "../../components/dashboard/transaction/TransactionTable";
-import { ExportAs } from "@/app/components/ui/jsx/icons";
+import { ExportAs } from "../../components/ui/jsx/icons";
 export default function TransactionPage() {
   const [selectedCard, setSelectedCard] = useState("All Cards");
   const [activeTab, setActiveTab] = useState("All");
