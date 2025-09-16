@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   BudgetIcon,
   CaretDown,
@@ -11,22 +11,11 @@ import {
   ScheduledCircle,
 } from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
-import Dropdown from "../../ui/Dropdown";
 import { useDashboard } from "../../../contexts/DashboardContext";
 import Image from "next/image";
 
 const BudgetOverview = () => {
   const { state } = useDashboard();
-  const [selectedTimePeriod, setSelectedTimePeriod] = useState("Last Year");
-
-  // Time period options
-  const timePeriodOptions = [
-    { value: "Last Week", label: "Last Week" },
-    { value: "Last Month", label: "Last Month" },
-    { value: "Last Quarter", label: "Last Quarter" },
-    { value: "Last Year", label: "Last Year" },
-    { value: "All Time", label: "All Time" },
-  ];
 
   // Calculate budget data from global state
   const data = {

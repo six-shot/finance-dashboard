@@ -453,7 +453,7 @@ export default function Cards() {
       </div>
 
       {/* See All Transactions Button */}
-      <Link href="/dashboard/transaction" className="">
+      <Link href="/transaction" className="">
         <Button
           variant="outline"
           className="w-full h-[36px] flex gap-1 justify-center items-center "

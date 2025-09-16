@@ -37,7 +37,7 @@ export default function SpendingSummary() {
           className="flex px-2.5 gap-[2px] h-8 items-center text-[#525866] text-sm font-medium leading-5 tracking-[-0.084px] w-fit"
         >
           Last Week
-          <CaretDown />
+         
         </Button>
       </div>
       <div className="py-4 border-b border-[#E1E4EA]">

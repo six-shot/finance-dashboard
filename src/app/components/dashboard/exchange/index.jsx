@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import {
-  CaretDown,
-  ExchangeIcon,
-  SwapIcon,
-} from "../../ui/jsx/icons";
+import { CaretDown, ExchangeIcon, SwapIcon } from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
 import { useDashboard } from "../../../contexts/DashboardContext";
 
@@ -19,7 +15,10 @@ export default function Exchange() {
     const temp = fromCurrency;
     setFromCurrency(toCurrency);
     setToCurrency(temp);
-    actions.updateExchange({ fromCurrency: toCurrency, toCurrency: fromCurrency });
+    actions.updateExchange({
+      fromCurrency: toCurrency,
+      toCurrency: fromCurrency,
+    });
   };
 
   const handleAmountChange = (e) => {
@@ -33,23 +32,27 @@ export default function Exchange() {
         id: Date.now(),
         icon: "exchange",
         title: "Currency Exchange",
-        subtitle: `Exchanged ${formatCurrency(amountNum)} ${fromCurrency} to ${toCurrency}`,
+        subtitle: `Exchanged ${formatCurrency(
+          amountNum
+        )} ${fromCurrency} to ${toCurrency}`,
         amount: amountNum,
         date: new Date().toISOString(),
         type: "debit",
         category: "exchange",
-        status: "completed"
+        status: "completed",
       });
-      
+
       actions.addNotification({
         id: Date.now(),
         title: "Exchange Completed",
-        message: `Successfully exchanged ${formatCurrency(amountNum)} ${fromCurrency} to ${toCurrency}`,
+        message: `Successfully exchanged ${formatCurrency(
+          amountNum
+        )} ${fromCurrency} to ${toCurrency}`,
         type: "success",
         timestamp: new Date().toISOString(),
-        read: false
+        read: false,
       });
-      
+
       alert("Exchange completed successfully!");
     } else {
       alert("Invalid amount or insufficient balance!");
@@ -64,7 +67,8 @@ export default function Exchange() {
     }).format(amount);
   };
 
-  const exchangeRate = state.exchange.rates[`${fromCurrency}_${toCurrency}`] || 0.94;
+  const exchangeRate =
+    state.exchange.rates[`${fromCurrency}_${toCurrency}`] || 0.94;
   const taxRate = 0.02;
   const feeRate = 0.01;
 
@@ -138,7 +142,10 @@ export default function Exchange() {
             step="0.01"
           />
           <div className="text-xs sm:text-sm text-[#525866] mt-1 leading-4 sm:leading-5">
-            Available: <span className="text-[#0E121B]">{formatCurrency(state.user.totalBalance)}</span>
+            Available:{" "}
+            <span className="text-[#0E121B]">
+              {formatCurrency(state.user.totalBalance)}
+            </span>
           </div>
         </div>
 
