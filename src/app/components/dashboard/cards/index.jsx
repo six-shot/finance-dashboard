@@ -24,6 +24,44 @@ import { PlatinumIcon } from "../sidebar";
 
 export default function Cards() {
   const [activeTab, setActiveTab] = useState("virtual");
+  const [currentVirtualCard, setCurrentVirtualCard] = useState(0);
+  const [currentPhysicalCard, setCurrentPhysicalCard] = useState(0);
+
+  const virtualCards = [
+    {
+      id: 1,
+      title: "Savings Card",
+      balance: "$16,058.94",
+      cardNumber: "• • • • 1234",
+      expiryDate: "06/27",
+      cvc: "• • •",
+      spendingLimit: "$12,000.00",
+      status: "Active",
+    },
+    {
+      id: 2,
+      title: "Business Card",
+      balance: "$8,245.67",
+      cardNumber: "• • • • 5678",
+      expiryDate: "08/25",
+      cvc: "• • •",
+      spendingLimit: "$15,000.00",
+      status: "Active",
+    },
+  ];
+
+  const physicalCards = [
+    {
+      id: 1,
+      title: "Physical Card",
+      balance: "$16,058.94",
+      cardNumber: "• • • • 1234",
+      expiryDate: "06/27",
+      cvc: "• • •",
+      spendingLimit: "$12,000.00",
+      status: "Active",
+    },
+  ];
 
   const transactions = [
     {
@@ -55,6 +93,37 @@ export default function Cards() {
     },
   ];
 
+  // Navigation handlers
+  const handlePreviousCard = () => {
+    if (activeTab === "virtual") {
+      setCurrentVirtualCard((prev) =>
+        prev === 0 ? virtualCards.length - 1 : prev - 1
+      );
+    } else {
+      setCurrentPhysicalCard((prev) =>
+        prev === 0 ? physicalCards.length - 1 : prev - 1
+      );
+    }
+  };
+
+  const handleNextCard = () => {
+    if (activeTab === "virtual") {
+      setCurrentVirtualCard((prev) =>
+        prev === virtualCards.length - 1 ? 0 : prev + 1
+      );
+    } else {
+      setCurrentPhysicalCard((prev) =>
+        prev === physicalCards.length - 1 ? 0 : prev + 1
+      );
+    }
+  };
+
+  // Get current card data
+  const currentCard =
+    activeTab === "virtual"
+      ? virtualCards[currentVirtualCard]
+      : physicalCards[currentPhysicalCard];
+
   return (
     <div className=" bg-white border border-[#E1E4EA] shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)]  h-full rounded-[16px] p-4">
       {/* Card Type Selector */}
@@ -68,7 +137,8 @@ export default function Cards() {
                 : " text-[#99A0AE] hover:shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] bg-white hover:rounded-[6px]"
             }`}
           >
-            Virtual <span className="text-[#99A0AE]">(2)</span>
+            Virtual{" "}
+            <span className="text-[#99A0AE]">({virtualCards.length})</span>
           </button>
           <button
             onClick={() => setActiveTab("physical")}
@@ -78,7 +148,8 @@ export default function Cards() {
                 : " text-[#99A0AE] hover:shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] bg-white hover:rounded-[6px]"
             }`}
           >
-            Physical <span className="text-[#99A0AE]">(1)</span>
+            Physical{" "}
+            <span className="text-[#99A0AE]">({physicalCards.length})</span>
           </button>
         </div>
       </div>
@@ -111,17 +182,23 @@ export default function Cards() {
 
           <div className="relative z-10">
             <h3 className="text-sm text-[#525866] leading-5 tracking-[-0.084px] mb-1">
-              Savings Card
+              {currentCard.title}
             </h3>
             <div className="flex items-end justify-between">
               <h2 className="text-[32px] font-medium text-[#0E121B] -mb-[2px]">
-                $16,058.94
+                {currentCard.balance}
               </h2>
               <div className="flex w-[48px] h-[24px] ">
-                <button className="w-6 h-6  border border-[#E1E4EA] rounded-l-[6px]   flex justify-center items-center">
+                <button
+                  onClick={handlePreviousCard}
+                  className="w-6 h-6  border border-[#E1E4EA] rounded-l-[6px]   flex justify-center items-center hover:bg-gray-50 transition-colors"
+                >
                   <ArrowLeftIcon />
                 </button>
-                <button className="w-6 h-6  border border-[#E1E4EA] rounded-l-none rounded-r-[6px] flex justify-center items-center">
+                <button
+                  onClick={handleNextCard}
+                  className="w-6 h-6  border border-[#E1E4EA] rounded-l-none rounded-r-[6px] flex justify-center items-center hover:bg-gray-50 transition-colors"
+                >
                   <ArrowRightIcon />
                 </button>
               </div>
@@ -152,17 +229,23 @@ export default function Cards() {
 
           <div className="relative z-10">
             <h3 className="text-sm text-white leading-5 tracking-[-0.084px] mb-1">
-              Physical Card
+              {currentCard.title}
             </h3>
             <div className="flex items-end justify-between">
               <h2 className="text-[32px] font-medium text-white -mb-[2px]">
-                $16,058.94
+                {currentCard.balance}
               </h2>
               <div className="flex w-[48px] h-[24px] ">
-                <button className="w-6 h-6  border border-[#404040] rounded-l-[6px]   flex justify-center items-center">
+                <button
+                  onClick={handlePreviousCard}
+                  className="w-6 h-6  border border-[#404040] rounded-l-[6px]   flex justify-center items-center hover:bg-gray-800 transition-colors"
+                >
                   <ArrowLeftIcon />
                 </button>
-                <button className="w-6 h-6  border border-[#404040] rounded-l-none rounded-r-[6px] flex justify-center items-center">
+                <button
+                  onClick={handleNextCard}
+                  className="w-6 h-6  border border-[#404040] rounded-l-none rounded-r-[6px] flex justify-center items-center hover:bg-gray-800 transition-colors"
+                >
                   <ArrowRightIcon />
                 </button>
               </div>
@@ -176,19 +259,27 @@ export default function Cards() {
         <div className="space-y-3">
           <div className="flex justify-between items-center text-sm text-[#525866] ">
             <span>Card Number</span>
-            <span className=" text-[#0E121B] font-medium">• • • • 1234</span>
+            <span className=" text-[#0E121B] font-medium">
+              {currentCard.cardNumber}
+            </span>
           </div>
           <div className="flex justify-between items-center text-sm text-[#525866]">
             <span>Expiry Date</span>
-            <span className=" text-[#0E121B] font-medium">06/27</span>
+            <span className=" text-[#0E121B] font-medium">
+              {currentCard.expiryDate}
+            </span>
           </div>
           <div className="flex justify-between items-center text-sm text-[#525866]">
             <span>CVC</span>
-            <span className=" text-[#0E121B] font-medium">• • •</span>
+            <span className=" text-[#0E121B] font-medium">
+              {currentCard.cvc}
+            </span>
           </div>
           <div className="flex justify-between items-center text-sm text-[#525866]">
             <span>Spending Limit</span>
-            <span className=" text-[#0E121B] font-medium">$12,000.00</span>
+            <span className=" text-[#0E121B] font-medium">
+              {currentCard.spendingLimit}
+            </span>
           </div>
         </div>
 
