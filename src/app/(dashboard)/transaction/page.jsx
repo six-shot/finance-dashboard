@@ -30,7 +30,7 @@ export default function TransactionPage() {
     <div className="bg-white min-h-screen font-[family-name:var(--font-inter)] border-t border-[#E1E4EA] ">
       {/* Page Header Section */}
       <div className="my-4 border-b border-[#E1E4EA]">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
           <div>
             <h4 className="text-xl font-medium text-[#0E121B]">All Cards</h4>
             <p className="text-sm text-[#525866] mt-1">
@@ -39,7 +39,7 @@ export default function TransactionPage() {
           </div>
           <button 
             onClick={handleExport}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full sm:w-auto justify-center"
           >
             <ExportAs />
             Export As
