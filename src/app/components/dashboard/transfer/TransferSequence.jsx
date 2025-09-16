@@ -10,6 +10,7 @@ import { Button } from "../../ui/button";
 
 const TransferSequence = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [transferData, setTransferData] = useState({
     recipient: null,
     paymentMethod: null,
@@ -42,7 +43,13 @@ const TransferSequence = () => {
   const handleStepClick = (stepId) => {
     if (stepId <= currentStep) {
       setCurrentStep(stepId);
+      // Close mobile menu after step selection
+      setIsMobileMenuOpen(false);
     }
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const updateTransferData = (newData) => {
@@ -53,9 +60,61 @@ const TransferSequence = () => {
 
   return (
     <div className="min-h-screen flex justify-center font-[family-name:var(--font-inter)] p-2">
-      <div className="flex max-w-6xl w-full bg-white rounded-2xl overflow-hidden">
+      <div className="flex max-w-6xl w-full bg-white rounded-2xl overflow-hidden relative">
+        {/* Mobile Header - Only visible on mobile */}
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+          <button
+            onClick={toggleMobileMenu}
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium text-gray-600">
+              Step {currentStep} of {steps.length}
+            </span>
+            <div className="flex gap-1">
+              {steps.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full ${
+                    index + 1 <= currentStep ? "bg-[#335CFF]" : "bg-gray-300"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Overlay - Only visible on mobile when menu is open */}
+        {isMobileMenuOpen && (
+          <div
+            className="lg:hidden fixed inset-0 bg-[rgba(2,13,23,0.24)] backdrop-blur-[5px] z-40"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+
         {/* Left Sidebar - Transfer Sequence */}
-        <div className="w-[264px] rounded-[16px] bg-[#F5F7FA] py-6 px-4 flex flex-col">
+        <div
+          className={`
+          w-[264px] rounded-[16px] bg-[#F5F7FA] py-6 px-4 flex flex-col
+          lg:static lg:translate-x-0 lg:opacity-100
+          fixed top-0 left-0 h-full z-50 transform transition-transform duration-300 ease-in-out
+          ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+        >
           <div className="mb-3">
             <h2 className="text-xs font-medium leading-4 text-[#99A0AE] uppercase tracking-[0.48px]">
               Transfer Sequence
@@ -151,7 +210,7 @@ const TransferSequence = () => {
         </div>
 
         {/* Right Content Area */}
-        <div className="flex-1 bg-white relative">
+        <div className="flex-1 bg-white relative lg:pt-0 pt-16">
           <CurrentStepComponent
             transferData={transferData}
             updateTransferData={updateTransferData}
