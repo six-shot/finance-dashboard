@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import BudgetOverview from "../../components/dashboard/budget-overview";

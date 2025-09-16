@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "../../ui/button";
+import { useDashboard } from "../../../contexts/DashboardContext";
 
 import {
   ArrowLeftIcon,
@@ -14,84 +15,66 @@ import {
   Line2,
   MastercardIcon,
   Netflix,
+  Other,
   PlusIcon,
   RentalIcon,
+  ShoppingBag,
+  Utilities,
   VerveIcon,
   WalletIcon,
 } from "../../ui/jsx/icons";
 import Image from "next/image";
 import { PlatinumIcon } from "../sidebar";
+import Link from "next/link";
 
 export default function Cards() {
+  const { state, actions } = useDashboard();
   const [activeTab, setActiveTab] = useState("virtual");
   const [currentVirtualCard, setCurrentVirtualCard] = useState(0);
   const [currentPhysicalCard, setCurrentPhysicalCard] = useState(0);
 
-  const virtualCards = [
-    {
-      id: 1,
-      title: "Savings Card",
-      balance: "$16,058.94",
-      cardNumber: "• • • • 1234",
-      expiryDate: "06/27",
-      cvc: "• • •",
-      spendingLimit: "$12,000.00",
-      status: "Active",
-    },
-    {
-      id: 2,
-      title: "Business Card",
-      balance: "$8,245.67",
-      cardNumber: "• • • • 5678",
-      expiryDate: "08/25",
-      cvc: "• • •",
-      spendingLimit: "$15,000.00",
-      status: "Active",
-    },
-  ];
+  const virtualCards = state.cards.virtual;
+  const physicalCards = state.cards.physical;
 
-  const physicalCards = [
-    {
-      id: 1,
-      title: "Physical Card",
-      balance: "$16,058.94",
-      cardNumber: "• • • • 1234",
-      expiryDate: "06/27",
-      cvc: "• • •",
-      spendingLimit: "$12,000.00",
-      status: "Active",
-    },
-  ];
+  // Format currency
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
 
-  const transactions = [
-    {
-      id: 1,
-      icon: <Netflix />,
-      title: "Netflix Cashback",
-      subtitle: "Cashback of September, 2023",
-      amount: "$36.24",
-      date: "Sep 18",
-      type: "credit",
-    },
-    {
-      id: 2,
-      icon: <RentalIcon />,
-      title: "Rental Income",
-      subtitle: "Rental payment from Mr. Dudley.",
-      amount: "$800.00",
-      date: "Sep 17",
-      type: "credit",
-    },
-    {
-      id: 3,
-      icon: <Grocery />,
-      title: "Grocery Shopping",
-      subtitle: "Purchase of monthly groceries.",
-      amount: "$84.14",
-      date: "Sep 16",
-      type: "debit",
-    },
-  ];
+  // Format card number for display
+  const formatCardNumber = (cardNumber) => {
+    return `• • • • ${cardNumber}`;
+  };
+
+  // Format CVC for display
+  const formatCVC = (cvc) => {
+    return "• • •";
+  };
+
+  // Get recent transactions from global state
+  const recentTransactions = state.transactions.slice(0, 3);
+
+  // Icon mapping for transactions
+  const getTransactionIcon = (iconType) => {
+    const iconMap = {
+      netflix: <Netflix />,
+      rental: <RentalIcon />,
+      grocery: <Grocery />,
+      utilities: <Utilities />,
+      shopping: <ShoppingBag />,
+    };
+    return iconMap[iconType] || <Other />;
+  };
+
+  // Format date for display
+  const formatTransactionDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
 
   // Navigation handlers
   const handlePreviousCard = () => {
@@ -123,6 +106,81 @@ export default function Cards() {
     activeTab === "virtual"
       ? virtualCards[currentVirtualCard]
       : physicalCards[currentPhysicalCard];
+
+  // Card management functions
+  const handleHideCard = () => {
+    actions.updateCard(activeTab, currentCard.id, { status: "Hidden" });
+    actions.addNotification({
+      id: Date.now(),
+      title: "Card Hidden",
+      message: `${currentCard.title} has been hidden successfully`,
+      type: "info",
+      timestamp: new Date().toISOString(),
+      read: false,
+    });
+  };
+
+  const handleUnhideCard = () => {
+    actions.updateCard(activeTab, currentCard.id, { status: "Active" });
+    actions.addNotification({
+      id: Date.now(),
+      title: "Card Unhidden",
+      message: `${currentCard.title} has been unhidden successfully`,
+      type: "success",
+      timestamp: new Date().toISOString(),
+      read: false,
+    });
+  };
+
+  const handleAdjustLimit = () => {
+    const newLimit = prompt(
+      "Enter new spending limit:",
+      currentCard.spendingLimit
+    );
+    if (newLimit && !isNaN(parseFloat(newLimit))) {
+      actions.updateCard(activeTab, currentCard.id, {
+        spendingLimit: parseFloat(newLimit),
+      });
+      actions.addNotification({
+        id: Date.now(),
+        title: "Spending Limit Updated",
+        message: `Spending limit for ${
+          currentCard.title
+        } updated to ${formatCurrency(parseFloat(newLimit))}`,
+        type: "info",
+        timestamp: new Date().toISOString(),
+        read: false,
+      });
+    }
+  };
+
+  const handleMoreOptions = () => {
+    const options = [
+      "Freeze Card",
+      "Block Card",
+      "Change PIN",
+      "View Statements",
+      "Report Lost/Stolen",
+    ];
+    const choice = prompt(
+      `Choose an option:\n${options
+        .map((opt, i) => `${i + 1}. ${opt}`)
+        .join("\n")}`
+    );
+    const optionIndex = parseInt(choice) - 1;
+
+    if (optionIndex >= 0 && optionIndex < options.length) {
+      const selectedOption = options[optionIndex];
+      actions.addNotification({
+        id: Date.now(),
+        title: "Card Action",
+        message: `${selectedOption} requested for ${currentCard.title}`,
+        type: "info",
+        timestamp: new Date().toISOString(),
+        read: false,
+      });
+    }
+  };
 
   return (
     <div className=" bg-white border border-[#E1E4EA] shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)]  h-full rounded-[16px] p-4">
@@ -156,7 +214,13 @@ export default function Cards() {
 
       {/* Main Card Display */}
       {activeTab === "virtual" ? (
-        <div className="border border-[#E1E4EA] rounded-[16px] p-5  bg-white shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between  flex-col relative">
+        <div
+          className={`border rounded-[16px] p-5 bg-white shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between flex-col relative ${
+            currentCard.status === "Hidden"
+              ? "border-[#FF6B6B] opacity-75"
+              : "border-[#E1E4EA]"
+          }`}
+        >
           <div className="absolute top-0 right-0">
             <Line1 />
           </div>
@@ -172,9 +236,23 @@ export default function Cards() {
                 </div>
                 <VerveIcon />
               </div>
-              <div className="pl-1 pr-2 h-[24px] flex gap-1 items-center border border-[#E1E4EA] rounded-[6px] ">
+              <div
+                className={`pl-1 pr-2 h-[24px] flex gap-1 items-center border rounded-[6px] ${
+                  currentCard.status === "Hidden"
+                    ? "border-[#FF6B6B] bg-[#FFF5F5]"
+                    : "border-[#E1E4EA]"
+                }`}
+              >
                 <CheckIcon />
-                <h6 className="text-xs font-medium text-[#525866]">Active</h6>
+                <h6
+                  className={`text-xs font-medium ${
+                    currentCard.status === "Hidden"
+                      ? "text-[#FF6B6B]"
+                      : "text-[#525866]"
+                  }`}
+                >
+                  {currentCard.status}
+                </h6>
               </div>
             </div>
             <MastercardIcon />
@@ -186,7 +264,7 @@ export default function Cards() {
             </h3>
             <div className="flex items-end justify-between">
               <h2 className="text-[32px] font-medium text-[#0E121B] -mb-[2px]">
-                {currentCard.balance}
+                {formatCurrency(currentCard.balance)}
               </h2>
               <div className="flex w-[48px] h-[24px] ">
                 <button
@@ -206,7 +284,13 @@ export default function Cards() {
           </div>
         </div>
       ) : (
-        <div className="border border-[#2A2A2A] rounded-[16px] p-5  bg-black shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between  flex-col relative">
+        <div
+          className={`border rounded-[16px] p-5 bg-black shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)] h-[188px] flex justify-between flex-col relative ${
+            currentCard.status === "Hidden"
+              ? "border-[#FF6B6B] opacity-75"
+              : "border-[#2A2A2A]"
+          }`}
+        >
           <div className="absolute top-0 right-0">
             <Line1 />
           </div>
@@ -219,9 +303,23 @@ export default function Cards() {
                 <PlatinumIcon />
                 <VerveIcon />
               </div>
-              <div className="pl-1 pr-2 h-[24px] flex gap-1 items-center">
+              <div
+                className={`pl-1 pr-2 h-[24px] flex gap-1 items-center rounded-[6px] ${
+                  currentCard.status === "Hidden"
+                    ? "border border-[#FF6B6B] bg-[#2A1A1A]"
+                    : ""
+                }`}
+              >
                 <CheckIcon />
-                <h6 className="text-xs font-medium text-white">Active</h6>
+                <h6
+                  className={`text-xs font-medium ${
+                    currentCard.status === "Hidden"
+                      ? "text-[#FF6B6B]"
+                      : "text-white"
+                  }`}
+                >
+                  {currentCard.status}
+                </h6>
               </div>
             </div>
             <MastercardIcon />
@@ -233,7 +331,7 @@ export default function Cards() {
             </h3>
             <div className="flex items-end justify-between">
               <h2 className="text-[32px] font-medium text-white -mb-[2px]">
-                {currentCard.balance}
+                {formatCurrency(currentCard.balance)}
               </h2>
               <div className="flex w-[48px] h-[24px] ">
                 <button
@@ -260,7 +358,7 @@ export default function Cards() {
           <div className="flex justify-between items-center text-sm text-[#525866] ">
             <span>Card Number</span>
             <span className=" text-[#0E121B] font-medium">
-              {currentCard.cardNumber}
+              {formatCardNumber(currentCard.cardNumber)}
             </span>
           </div>
           <div className="flex justify-between items-center text-sm text-[#525866]">
@@ -272,13 +370,13 @@ export default function Cards() {
           <div className="flex justify-between items-center text-sm text-[#525866]">
             <span>CVC</span>
             <span className=" text-[#0E121B] font-medium">
-              {currentCard.cvc}
+              {formatCVC(currentCard.cvc)}
             </span>
           </div>
           <div className="flex justify-between items-center text-sm text-[#525866]">
             <span>Spending Limit</span>
             <span className=" text-[#0E121B] font-medium">
-              {currentCard.spendingLimit}
+              {formatCurrency(currentCard.spendingLimit)}
             </span>
           </div>
         </div>
@@ -290,20 +388,27 @@ export default function Cards() {
           }`}
         >
           <Button
+            onClick={
+              currentCard.status === "Hidden"
+                ? handleUnhideCard
+                : handleHideCard
+            }
             variant="outline"
-            className="w-full flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040]"
+            className="w-full flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040] hover:bg-gray-50 transition-colors"
           >
-            Unhide
+            {currentCard.status === "Hidden" ? "Unhide" : "Hide"}
           </Button>
           <Button
+            onClick={handleAdjustLimit}
             variant="outline"
-            className="w-full text-nowrap flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040]"
+            className="w-full text-nowrap flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040] hover:bg-gray-50 transition-colors"
           >
             Adjust Limit
           </Button>
           <Button
+            onClick={handleMoreOptions}
             variant="outline"
-            className="w-full flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040]"
+            className="w-full flex justify-center gap-1.5 h-8 items-center text-sm font-medium leading-5 tracking-[-0.084px]  text-[#525866] border-[#404040] hover:bg-gray-50 transition-colors"
           >
             More
           </Button>
@@ -316,13 +421,13 @@ export default function Cards() {
           RECENT TRANSACTIONS
         </h3>
         <div className="space-y-4">
-          {transactions.map((transaction) => (
+          {recentTransactions.map((transaction) => (
             <div
               key={transaction.id}
               className="flex items-center gap-3 h-[56px]"
             >
               <div className="w-10 h-10 bg-white border border-[#E1E4EA] rounded-full flex justify-center items-center">
-                {transaction.icon}{" "}
+                {getTransactionIcon(transaction.icon)}
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-[#0E121B] text-sm leading-5 tracking-[-0.084px]">
@@ -335,11 +440,11 @@ export default function Cards() {
               <div className="text-right">
                 <p className="text-[#0E121B] font-medium text-sm leading-5 tracking-[-0.084px]">
                   {transaction.type === "credit"
-                    ? transaction.amount
-                    : `-${transaction.amount}`}
+                    ? `+${formatCurrency(transaction.amount)}`
+                    : `-${formatCurrency(transaction.amount)}`}
                 </p>
                 <p className="text-xs text-[#525866] leading-4">
-                  {transaction.date}
+                  {formatTransactionDate(transaction.date)}
                 </p>
               </div>
             </div>
@@ -348,7 +453,7 @@ export default function Cards() {
       </div>
 
       {/* See All Transactions Button */}
-      <div className="">
+      <Link href="/dashboard/transaction" className="">
         <Button
           variant="outline"
           className="w-full h-[36px] flex gap-1 justify-center items-center "
@@ -356,7 +461,7 @@ export default function Cards() {
           <Clock />
           See All Transactions
         </Button>
-      </div>
+      </Link>
     </div>
   );
 }

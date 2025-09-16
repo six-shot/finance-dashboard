@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   CaretDown,
@@ -7,9 +8,21 @@ import {
   Utilities,
 } from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
+import { useDashboard } from "../../../contexts/DashboardContext";
 import Image from "next/image";
 
 export default function SpendingSummary() {
+  const { state } = useDashboard();
+
+  // Format currency
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
+
   return (
     <div className="bg-white border border-[#E1E4EA] shadow-[0px_1px_2px_0px_rgba(10,_13,_20,_0.03)]  h-full rounded-[16px] p-3 sm:p-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pb-4 border-b border-[#E1E4EA] gap-3 sm:gap-0">
@@ -46,7 +59,7 @@ export default function SpendingSummary() {
               Shopping
             </span>
             <span className="text-[#0E121B] text-sm font-medium leading-5 tracking-[-0.084px]">
-              $900.00
+              {formatCurrency(state.spending.shopping)}
             </span>
           </div>
         </div>
@@ -59,7 +72,7 @@ export default function SpendingSummary() {
               Utilities
             </span>
             <span className="text-[#0E121B] text-sm font-medium leading-5 tracking-[-0.084px]">
-              $600.00
+              {formatCurrency(state.spending.utilities)}
             </span>
           </div>
         </div>
@@ -72,13 +85,14 @@ export default function SpendingSummary() {
               Others
             </span>
             <span className="text-[#0E121B] text-sm font-medium leading-5 tracking-[-0.084px]">
-              $200.00
+              {formatCurrency(state.spending.others)}
             </span>
           </div>
         </div>
       </div>
       <div className="w-full bg-white h-[28px] rounded-[6px] px-2.5 flex items-center border border-[#E1E4EA] text-[#525866] text-xs font-medium shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)]">
-        Your weekly spending limit is $2000.
+        Your weekly spending limit is{" "}
+        {formatCurrency(state.spending.weeklyLimit)}.
       </div>
     </div>
   );

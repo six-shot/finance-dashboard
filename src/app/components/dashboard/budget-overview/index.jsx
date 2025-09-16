@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   BudgetIcon,
   CaretDown,
@@ -10,14 +11,37 @@ import {
   ScheduledCircle,
 } from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
+import Dropdown from "../../ui/Dropdown";
+import { useDashboard } from "../../../contexts/DashboardContext";
 import Image from "next/image";
 
 const BudgetOverview = () => {
-  // Sample data - in a real app, this would come from props or API
+  const { state } = useDashboard();
+  const [selectedTimePeriod, setSelectedTimePeriod] = useState("Last Year");
+
+  // Time period options
+  const timePeriodOptions = [
+    { value: "Last Week", label: "Last Week" },
+    { value: "Last Month", label: "Last Month" },
+    { value: "Last Quarter", label: "Last Quarter" },
+    { value: "Last Year", label: "Last Year" },
+    { value: "All Time", label: "All Time" },
+  ];
+
+  // Calculate budget data from global state
   const data = {
-    income: { amount: 96000, change: 5 },
-    expenses: { amount: 24000, change: -3 },
-    scheduled: { amount: 14000, change: 0 },
+    income: {
+      amount: state.budget.income,
+      change: 5, // This could be calculated from historical data
+    },
+    expenses: {
+      amount: state.budget.expenses,
+      change: -3, // This could be calculated from historical data
+    },
+    scheduled: {
+      amount: state.budget.scheduled,
+      change: 0,
+    },
   };
 
   const formatCurrency = (amount) => {

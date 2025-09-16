@@ -1,6 +1,7 @@
 "use client";
 import Header from "../components/dashboard/header";
 import Sidebar from "../components/dashboard/sidebar";
+import { DashboardProvider } from "../contexts/DashboardContext";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
@@ -82,7 +83,8 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div className="flex max-w-[1440px] mx-auto relative">
+    <DashboardProvider>
+      <div className="flex max-w-[1440px] mx-auto relative">
       {/* Mobile Overlay */}
       {isMobile && isMobileMenuOpen && (
         <div
@@ -140,6 +142,7 @@ const Layout = ({ children }) => {
         <div className="px-4 sm:px-6 lg:px-8 pb-8"> {children}</div>
       </div>
     </div>
+    </DashboardProvider>
   );
 };
 

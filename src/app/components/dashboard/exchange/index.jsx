@@ -7,23 +7,68 @@ import {
   SwapIcon,
 } from "../../ui/jsx/icons";
 import { Button } from "../../ui/button";
+import { useDashboard } from "../../../contexts/DashboardContext";
 
 export default function Exchange() {
-  const [fromCurrency, setFromCurrency] = useState("USD");
-  const [toCurrency, setToCurrency] = useState("EUR");
+  const { state, actions } = useDashboard();
+  const [fromCurrency, setFromCurrency] = useState(state.exchange.fromCurrency);
+  const [toCurrency, setToCurrency] = useState(state.exchange.toCurrency);
   const [amount, setAmount] = useState("100.00");
-  const [availableBalance] = useState("16,058.94");
 
   const handleSwap = () => {
+    const temp = fromCurrency;
     setFromCurrency(toCurrency);
-    setToCurrency(fromCurrency);
+    setToCurrency(temp);
+    actions.updateExchange({ fromCurrency: toCurrency, toCurrency: fromCurrency });
   };
 
-  const exchangeRate = 0.94;
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const handleExchange = () => {
+    const amountNum = parseFloat(amount);
+    if (amountNum > 0 && amountNum <= state.user.totalBalance) {
+      actions.addTransaction({
+        id: Date.now(),
+        icon: "exchange",
+        title: "Currency Exchange",
+        subtitle: `Exchanged ${formatCurrency(amountNum)} ${fromCurrency} to ${toCurrency}`,
+        amount: amountNum,
+        date: new Date().toISOString(),
+        type: "debit",
+        category: "exchange",
+        status: "completed"
+      });
+      
+      actions.addNotification({
+        id: Date.now(),
+        title: "Exchange Completed",
+        message: `Successfully exchanged ${formatCurrency(amountNum)} ${fromCurrency} to ${toCurrency}`,
+        type: "success",
+        timestamp: new Date().toISOString(),
+        read: false
+      });
+      
+      alert("Exchange completed successfully!");
+    } else {
+      alert("Invalid amount or insufficient balance!");
+    }
+  };
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
+
+  const exchangeRate = state.exchange.rates[`${fromCurrency}_${toCurrency}`] || 0.94;
   const taxRate = 0.02;
   const feeRate = 0.01;
 
-  const amountNum = parseFloat(amount);
+  const amountNum = parseFloat(amount) || 0;
   const tax = amountNum * taxRate;
   const fee = amountNum * feeRate;
   const totalAmount = (amountNum - tax - fee) * exchangeRate;
@@ -83,11 +128,17 @@ export default function Exchange() {
 
         {/* Amount Display */}
         <div className="border-t-0 border border-[#E1E4EA] p-3 sm:p-4 flex flex-col justify-center items-center">
-          <div className="text-2xl sm:text-[32px] font-bold text-[#0E121B] font-[family-name:var(--font-geist)] leading-8 sm:leading-10">
-            ${amount}
-          </div>
+          <input
+            type="number"
+            value={amount}
+            onChange={handleAmountChange}
+            className="text-2xl sm:text-[32px] font-bold text-[#0E121B] font-[family-name:var(--font-geist)] leading-8 sm:leading-10 text-center bg-transparent border-none outline-none w-full"
+            placeholder="0.00"
+            min="0"
+            step="0.01"
+          />
           <div className="text-xs sm:text-sm text-[#525866] mt-1 leading-4 sm:leading-5">
-            Available: <span className="text-[#0E121B]">$16,058.94</span>
+            Available: <span className="text-[#0E121B]">{formatCurrency(state.user.totalBalance)}</span>
           </div>
         </div>
 
@@ -126,8 +177,9 @@ export default function Exchange() {
 
       {/* Exchange Button */}
       <Button
+        onClick={handleExchange}
         variant="outline"
-        className="w-full h-[36px] mt-4 sm:mt-6 flex items-center justify-center"
+        className="w-full h-[36px] mt-4 sm:mt-6 flex items-center justify-center hover:bg-gray-50 transition-colors"
       >
         <ExchangeIcon />
         Exchange
