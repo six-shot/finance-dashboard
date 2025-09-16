@@ -12,7 +12,11 @@ export default function TransactionPage() {
   const [sortBy, setSortBy] = useState("date");
   const [sortOrder, setSortOrder] = useState("desc");
 
-  const cardTabs = ["All Cards", ...state.cards.virtual.map(card => card.title), ...state.cards.physical.map(card => card.title)];
+  const cardTabs = [
+    "All Cards",
+    ...state.cards.virtual.map((card) => card.title),
+    ...state.cards.physical.map((card) => card.title),
+  ];
 
   const handleExport = () => {
     actions.addNotification({
@@ -21,7 +25,7 @@ export default function TransactionPage() {
       message: "Your transaction data is being prepared for download",
       type: "info",
       timestamp: new Date().toISOString(),
-      read: false
+      read: false,
     });
     alert("Export functionality coming soon!");
   };
@@ -37,7 +41,7 @@ export default function TransactionPage() {
               Monitor and manage transactions across all your cards.
             </p>
           </div>
-          <button 
+          <button
             onClick={handleExport}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full sm:w-auto justify-center"
           >

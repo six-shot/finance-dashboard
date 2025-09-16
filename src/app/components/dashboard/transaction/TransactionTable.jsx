@@ -296,9 +296,9 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
   };
 
   return (
-    <div className="bg-white  overflow-hidden ">
-      {/* Table Header */}
-      <div className=" ">
+    <div className="bg-white overflow-hidden">
+      {/* Desktop Table Header - Hidden on mobile */}
+      <div className="hidden lg:block">
         <div className="flex items-center text-sm font-medium">
           <div className="flex items-center gap-2.5 h-[36px] bg-[#F5F7FA] w-[328px] px-3 rounded-l-[8px]">
             <div className="p-[3.5px]">
@@ -361,8 +361,8 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
         </div>
       </div>
 
-      {/* Table Body */}
-      <div className=" mt-2 gap-[1.5px]">
+      {/* Desktop Table Body - Hidden on mobile */}
+      <div className="hidden lg:block mt-2 gap-[1.5px]">
         {searchFilteredTransactions.map((transaction) => (
           <div
             key={transaction.id}
@@ -431,12 +431,71 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
         ))}
       </div>
 
+      {/* Mobile Card Layout - Visible only on mobile */}
+      <div className="lg:hidden space-y-3 p-4">
+        {searchFilteredTransactions.map((transaction) => (
+          <div
+            key={transaction.id}
+            className="bg-white border border-[#E1E4EA] rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition-colors"
+            onClick={() => handleTransactionClick(transaction)}
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-[32px] h-[32px] flex items-center justify-center border border-[#E1E4EA] rounded-full flex-shrink-0">
+                  {renderIcon(transaction)}
+                </div>
+                <div>
+                  <h4 className="text-[#0E121B] text-sm font-medium leading-5">
+                    {transaction.name}
+                  </h4>
+                  <p className="text-[#525866] text-xs mt-1">
+                    {transaction.account}
+                  </p>
+                </div>
+              </div>
+              <div className="text-right">
+                <div
+                  className={`text-sm font-medium ${
+                    transaction.amount < 0 ? "text-red-600" : "text-green-600"
+                  }`}
+                >
+                  {transaction.amount < 0 ? "-" : "+"}$
+                  {Math.abs(transaction.amount).toFixed(2)}
+                </div>
+                <button className="p-1 hover:bg-gray-100 rounded mt-1">
+                  <ThreeDot />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-xs text-[#525866]">
+              <div className="flex items-center gap-2">
+                <span className="w-[20px] h-[20px] border border-[#E1E4EA] bg-white shadow-[0 1px 2px 0 rgba(10, 13, 20, 0.03)] rounded-full flex items-center justify-center">
+                  {transaction.paymentMethod === "Wire" ? (
+                    <WireIcon />
+                  ) : transaction.paymentMethod === "Money Transfer" ? (
+                    <MoneyTransfer />
+                  ) : transaction.paymentMethod === "ACH" ? (
+                    <ACHIcon />
+                  ) : transaction.paymentIcon === InvestmentIcon ? (
+                    <InvestmentIcon />
+                  ) : null}
+                </span>
+                <span>{transaction.paymentMethod}</span>
+              </div>
+              <span>{transaction.date}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Pagination */}
-      <div className="px-6 py-4 mt-[88px] ">
-        <div className="flex items-center justify-between">
+      <div className="px-4 lg:px-6 py-4 mt-8 lg:mt-[88px]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-sm text-[#525866]">Page {currentPage} of 16</div>
 
-          <div className="flex items-center gap-2">
+          {/* Desktop Pagination - Hidden on mobile */}
+          <div className="hidden sm:flex items-center gap-2">
             <div className="w-8 h-8 flex justify-center items-center">
               <DoublePrevArrow />
             </div>
@@ -486,6 +545,18 @@ const TransactionTable = ({ searchTerm, activeTab, sortBy, sortOrder }) => {
                   d="M13 5l7 7-7 7M5 5l7 7-7 7"
                 />
               </svg>
+            </button>
+          </div>
+
+          {/* Mobile Pagination - Simple prev/next */}
+          <div className="flex sm:hidden items-center gap-4">
+            <button className="flex items-center gap-1 px-3 py-2 text-sm text-[#525866] border border-[#E1E4EA] rounded-lg hover:bg-gray-50">
+              <PrevArrow />
+              <span>Previous</span>
+            </button>
+            <button className="flex items-center gap-1 px-3 py-2 text-sm text-[#525866] border border-[#E1E4EA] rounded-lg hover:bg-gray-50">
+              <span>Next</span>
+              <NextArrow />
             </button>
           </div>
 
