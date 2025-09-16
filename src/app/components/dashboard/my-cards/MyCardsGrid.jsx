@@ -34,14 +34,14 @@ export default function MyCardsGrid() {
   ];
 
   return (
-    <div className="mt-6">
+    <div className="mt-4 sm:mt-6">
       <FilterBar>
-        <div className="h-[36px] bg-[#F5F7FA] rounded-[10px] p-1 ">
+        <div className="h-[32px] sm:h-[36px] bg-[#F5F7FA] rounded-[10px] p-1 flex">
           <button
             onClick={() => setActiveTab("All")}
-            className={`h-full text-sm font-medium rounded-md transition-colors w-[74px] text-[#0E121B] leading-5 cursor-pointer ${
+            className={`h-full text-xs sm:text-sm font-medium rounded-md transition-colors flex-1 sm:w-[74px] text-[#0E121B] leading-5 cursor-pointer ${
               activeTab === "All"
-                ? "bg-[#FFF] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] "
+                ? "bg-[#FFF] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)]"
                 : "text-[#99A0AE]"
             }`}
           >
@@ -49,9 +49,9 @@ export default function MyCardsGrid() {
           </button>
           <button
             onClick={() => setActiveTab("Virtual")}
-            className={`h-full text-sm font-medium rounded-md transition-colors w-[74px] text-[#0E121B] leading-5 cursor-pointer ${
+            className={`h-full text-xs sm:text-sm font-medium rounded-md transition-colors flex-1 sm:w-[74px] text-[#0E121B] leading-5 cursor-pointer ${
               activeTab === "Virtual"
-                ? "bg-[#FFF] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] "
+                ? "bg-[#FFF] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)]"
                 : "text-[#99A0AE]"
             }`}
           >
@@ -59,9 +59,9 @@ export default function MyCardsGrid() {
           </button>
           <button
             onClick={() => setActiveTab("Physical")}
-            className={`h-full text-sm font-medium rounded-md transition-colors w-[74px] text-[#0E121B] leading-5 cursor-pointer ${
+            className={`h-full text-xs sm:text-sm font-medium rounded-md transition-colors flex-1 sm:w-[74px] text-[#0E121B] leading-5 cursor-pointer ${
               activeTab === "Physical"
-                ? "bg-[#FFF] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)] "
+                ? "bg-[#FFF] shadow-[0_6px_10px_0_rgba(14,18,27,0.06),_0_2px_4px_0_rgba(14,18,27,0.03)]"
                 : "text-[#99A0AE]"
             }`}
           >
@@ -71,10 +71,9 @@ export default function MyCardsGrid() {
       </FilterBar>
 
       {/* Card Content based on active tab */}
-      <div className="mt-6">
-        {" "}
+      <div className="mt-4 sm:mt-6">
         {activeTab === "All" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             {virtualCards.map((card, index) => (
               <VirtualCard key={`virtual-${index}`} card={card} />
             ))}
@@ -84,14 +83,14 @@ export default function MyCardsGrid() {
           </div>
         )}
         {activeTab === "Virtual" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             {virtualCards.map((card, index) => (
               <VirtualCard key={`virtual-${index}`} card={card} />
             ))}
           </div>
         )}
         {activeTab === "Physical" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             {physicalCards.map((card, index) => (
               <PhysicalCard key={`physical-${index}`} card={card} />
             ))}
