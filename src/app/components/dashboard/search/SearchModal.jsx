@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDashboard } from "../../../contexts/DashboardContext";
 import {
   Search,
@@ -14,6 +14,7 @@ const SearchModal = ({ isOpen, onClose }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const modalRef = useRef(null);
 
   // Perform search as user types
   useEffect(() => {
@@ -26,6 +27,23 @@ const SearchModal = ({ isOpen, onClose }) => {
       setSearchResults([]);
     }
   }, [searchQuery, state]);
+
+  // Handle click outside to close modal
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   const performSearch = (query) => {
     const results = [];
@@ -100,8 +118,11 @@ const SearchModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed font-[family-name:var(--font-inter)] inset-0 bg-[rgba(2,13,23,0.24)] backdrop-blur-[5px] z-50 flex items-start justify-center pt-20">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-96 overflow-hidden">
+    <div className="fixed font-[family-name:var(--font-inter)] inset-0 bg-[rgba(2,13,23,0.24)] backdrop-blur-[5px] z-50 flex items-start justify-center pt-20 animate-in fade-in duration-200">
+      <div
+        ref={modalRef}
+        className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-96 overflow-hidden animate-in slide-in-from-top-4 duration-300"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center gap-3">

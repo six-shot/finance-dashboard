@@ -23,6 +23,8 @@ import ExchangeIcon from "../../ui/jsx/icons/exchangeicon";
 import compact from "../../../../../public/svgs/compact.svg";
 import SupportIcon from "../../ui/jsx/icons/supportIcon";
 import SettingsIcon from "../../ui/jsx/icons/settingsIcon";
+import { CaretLeft } from "../../ui/jsx/icons";
+
 
 const menuItems = [
   {
@@ -93,7 +95,7 @@ const Sidebar = ({
   };
 
   return (
-    <aside className="flex h-full flex-col justify-between border-r border-[#E1E4EA] relative transition-all duration-300 font-[family-name:var(--font-inter)] w-full bg-white">
+    <aside className="flex h-full flex-col bg-red-500 justify-between border-r border-[#E1E4EA] relative transition-all duration-300 font-[family-name:var(--font-inter)] w-full bg-white">
       <div className="relative">
         {/* Desktop toggle button */}
         {!isMobile && (
@@ -260,6 +262,38 @@ const Sidebar = ({
               </li>
             </ul>
           </nav>
+        </div>
+      </div>
+      <div className="px-5">
+        {" "}
+        <div className="h-[64px] flex items-center justify-between  border-t border-[#E1E4EA] cursor-pointer ">
+          <div className="flex gap-3 items-center">
+            <Image src="/avatarr.png" width={48} height={48} alt="avatar" />
+            <div>
+              <div className="flex gap-[2px] items-center">
+                {" "}
+                <h4 className="text-sm text-[#0E121B] font-medium leading-5 tracking-[-0.084px] ">
+                  Arthur Taylor
+                </h4>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M8.75437 3.81504C7.8784 3.53147 6.92613 3.92591 6.50722 4.74584L6.00361 5.73158C5.94377 5.8487 5.84852 5.94396 5.73139 6.00379L4.74566 6.50741C3.92572 6.92631 3.53129 7.87858 3.81485 8.75456L4.15577 9.80768C4.19627 9.93281 4.19627 10.0676 4.15577 10.1927L3.81485 11.2458C3.53129 12.1218 3.92572 13.0741 4.74566 13.493L5.73139 13.9966C5.84852 14.0564 5.94377 14.1517 6.00361 14.2688L6.50722 15.2546C6.92613 16.0745 7.8784 16.4689 8.75437 16.1854L9.8075 15.8444C9.93262 15.8039 10.0674 15.8039 10.1925 15.8444L11.2456 16.1854C12.1216 16.4689 13.0739 16.0745 13.4928 15.2546L13.9964 14.2688C14.0562 14.1517 14.1515 14.0564 14.2686 13.9966L15.2544 13.493C16.0743 13.0741 16.4687 12.1218 16.1852 11.2458L15.8442 10.1927C15.8037 10.0676 15.8037 9.93281 15.8442 9.80768L16.1852 8.75456C16.4687 7.87858 16.0743 6.92631 15.2544 6.50741L14.2686 6.00379C14.1515 5.94396 14.0562 5.8487 13.9964 5.73158L13.4928 4.74584C13.0739 3.92591 12.1216 3.53147 11.2456 3.81504L10.1925 4.15595C10.0674 4.19645 9.93262 4.19646 9.8075 4.15595L8.75437 3.81504ZM6.72485 9.84849L7.60874 8.96456L9.3765 10.7324L12.9121 7.19684L13.7959 8.08072L9.3765 12.5001L6.72485 9.84849Z"
+                    fill="#47C2FF"
+                  />
+                </svg>
+              </div>
+              <p className="text-xs text-[#525866] leading-4 tracking-[-0.084px] ">
+                arthur@alignui.com
+              </p>
+            </div>
+          </div>
+          <CaretLeft />
         </div>
       </div>
     </aside>

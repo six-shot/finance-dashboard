@@ -422,32 +422,31 @@ export default function Cards() {
         </h3>
         <div className="space-y-4">
           {recentTransactions.map((transaction) => (
-            <div
-              key={transaction.id}
-              className="flex items-center gap-3 h-[56px]"
-            >
-              <div className="w-10 h-10 bg-white border border-[#E1E4EA] rounded-full flex justify-center items-center">
-                {getTransactionIcon(transaction.icon)}
+            <Link key={transaction.id} href="/transaction" className="block">
+              <div className="flex items-center gap-3 h-[56px] p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 cursor-pointer group">
+                <div className="w-10 h-10 bg-white border border-[#E1E4EA] rounded-full flex justify-center items-center group-hover:border-gray-300 transition-colors">
+                  {getTransactionIcon(transaction.icon)}
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-medium text-[#0E121B] text-sm leading-5 tracking-[-0.084px] group-hover:text-blue-600 transition-colors">
+                    {transaction.title}
+                  </h4>
+                  <p className="text-xs text-[#525866] leading-4 group-hover:text-gray-600 transition-colors">
+                    {transaction.subtitle}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[#0E121B] font-medium text-sm leading-5 tracking-[-0.084px] group-hover:text-blue-600 transition-colors">
+                    {transaction.type === "credit"
+                      ? `+${formatCurrency(transaction.amount)}`
+                      : `-${formatCurrency(transaction.amount)}`}
+                  </p>
+                  <p className="text-xs text-[#525866] leading-4 group-hover:text-gray-600 transition-colors">
+                    {formatTransactionDate(transaction.date)}
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <h4 className="font-medium text-[#0E121B] text-sm leading-5 tracking-[-0.084px]">
-                  {transaction.title}
-                </h4>
-                <p className="text-xs text-[#525866] leading-4">
-                  {transaction.subtitle}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-[#0E121B] font-medium text-sm leading-5 tracking-[-0.084px]">
-                  {transaction.type === "credit"
-                    ? `+${formatCurrency(transaction.amount)}`
-                    : `-${formatCurrency(transaction.amount)}`}
-                </p>
-                <p className="text-xs text-[#525866] leading-4">
-                  {formatTransactionDate(transaction.date)}
-                </p>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

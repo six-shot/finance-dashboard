@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ArrowRight,
   Notification,
@@ -28,6 +28,7 @@ export default function Header({
   const [isScrolled, setIsScrolled] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const notificationRef = useRef(null);
 
   // Get unread notification count
   const unreadCount = state.notifications.filter((n) => !n.read).length;
@@ -86,6 +87,26 @@ export default function Header({
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [showSearch]);
+
+  // Handle click outside notifications dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
+        setShowNotifications(false);
+      }
+    };
+
+    if (showNotifications) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showNotifications]);
 
   return (
     <div className={`w-full relative ${isScrolled ? "header-mask" : ""}`}>
@@ -164,24 +185,27 @@ export default function Header({
                 Ctrl+K
               </div>
             </div>
-            <div className="w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center relative">
+            <div
+              className="w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center relative"
+              ref={notificationRef}
+            >
               <button
                 onClick={handleNotificationClick}
-                className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="relative p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-110 active:scale-95"
               >
                 <Notification />
                 {unreadCount > 0 && (
-                  <div className="absolute top-[1px] right-[4px] w-[5px] h-[5px] bg-[#FB3748] rounded-full drop-shadow-[0_1px_2px_rgba(10,_13,_20,_0.03)]"></div>
+                  <div className="absolute top-[1px] right-[4px] w-[5px] h-[5px] bg-[#FB3748] rounded-full drop-shadow-[0_1px_2px_rgba(10,_13,_20,_0.03)] animate-pulse"></div>
                 )}
               </button>
 
               {/* Notifications Dropdown */}
               {showNotifications && (
-                <div className="absolute top-12 font-[family-name:var(--font-inter)] right-0 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+                <div className="absolute top-12 font-[family-name:var(--font-inter)] right-0 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
                   <div className="p-4 border-b border-gray-200">
                     <h3 className="font-medium text-gray-900">Notifications</h3>
                   </div>
-                  <div className="max-h-64 overflow-y-auto">
+                  <div className="max-h-64 overflow-y-auto overflow-x-hidden">
                     {state.notifications.length === 0 ? (
                       <div className="p-4 text-center text-gray-500">
                         No notifications
@@ -190,17 +214,17 @@ export default function Header({
                       state.notifications.map((notification) => (
                         <div
                           key={notification.id}
-                          className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${
+                          className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-all duration-200 hover:shadow-sm hover:border-l-2 hover:border-blue-500 ${
                             !notification.read ? "bg-blue-50" : ""
                           }`}
                           onClick={() => handleMarkAsRead(notification.id)}
                         >
-                          <div className="flex justify-between items-start">
-                            <div className="flex-1">
-                              <h4 className="font-medium text-sm text-gray-900">
+                          <div className="flex justify-between items-start gap-2">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-sm text-gray-900 truncate">
                                 {notification.title}
                               </h4>
-                              <p className="text-xs text-gray-600 mt-1">
+                              <p className="text-xs text-gray-600 mt-1 break-words">
                                 {notification.message}
                               </p>
                               <p className="text-xs text-gray-400 mt-1">
@@ -210,7 +234,7 @@ export default function Header({
                               </p>
                             </div>
                             {!notification.read && (
-                              <div className="w-2 h-2 bg-blue-500 rounded-full ml-2"></div>
+                              <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-1"></div>
                             )}
                           </div>
                         </div>
@@ -235,7 +259,7 @@ export default function Header({
             ) : (
               <Button
                 onClick={handleMoveMoney}
-                className="hidden md:flex text-xs sm:text-sm hover:bg-gray-50 transition-colors"
+                className="hidden md:flex text-xs sm:text-sm  transition-colors"
               >
                 Move Money <ArrowRight />
               </Button>

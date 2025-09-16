@@ -21,7 +21,7 @@ import {
   Netflix,
   RentalIcon,
   Grocery,
-    } from "../../components/ui/jsx/icons";
+} from "../../components/ui/jsx/icons";
 
 export default function PaymentsPage() {
   const [activeTab, setActiveTab] = useState("All");
@@ -133,19 +133,19 @@ export default function PaymentsPage() {
     <div className="space-y-6 font-[family-name:var(--font-inter)] border-t border-[#E1E4EA]">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="p-4 border-b border-[#E1E4EA] flex items-center justify-between w-full">
+        <div className="p-4 border-b border-[#E1E4EA] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 w-full">
           <div>
-            <h1 className="text-xl font-medium text-[#0E121B] leading-8 tracking-[-0.36px]">
+            <h1 className="text-lg sm:text-xl font-medium text-[#0E121B] leading-8 tracking-[-0.36px]">
               Payments
             </h1>
-            <p className="text-[#525866] text-sm  tracking-[-0.084px] mt-1">
+            <p className="text-[#525866] text-sm tracking-[-0.084px] mt-1">
               Manage your payments and recurring bills
             </p>
           </div>
 
           <Button
             onClick={() => setShowPaymentModal(true)}
-            className=""
+            className="w-full sm:w-auto"
           >
             <div className="[&_svg_path]:fill-white">
               <PlusIcon />
@@ -156,50 +156,50 @@ export default function PaymentsPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-        <div className="bg-white border border-[#E1E4EA] rounded-[16px] p-6 shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+        <div className="bg-white border border-[#E1E4EA] rounded-[16px] p-4 sm:p-6 shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)]">
           <div className="flex items-center justify-between">
-            <div>
+            <div className="flex-1 min-w-0">
               <p className="text-[#99A0AE] text-xs font-medium uppercase tracking-[0.48px] leading-4">
                 Total Payments
               </p>
-              <p className="text-[#0E121B] text-2xl font-medium leading-8 mt-2">
+              <p className="text-[#0E121B] text-xl sm:text-2xl font-medium leading-8 mt-2">
                 {payments.length}
               </p>
             </div>
-            <div className="w-12 h-12 bg-[#EBF1FF] rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#EBF1FF] rounded-full flex items-center justify-center flex-shrink-0 ml-3">
               <MoneyTransfer />
             </div>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E1E4EA] rounded-[16px] p-6 shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)]">
+        <div className="bg-white border border-[#E1E4EA] rounded-[16px] p-4 sm:p-6 shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)]">
           <div className="flex items-center justify-between">
-            <div>
+            <div className="flex-1 min-w-0">
               <p className="text-[#99A0AE] text-xs font-medium uppercase tracking-[0.48px] leading-4">
                 This Month
               </p>
-              <p className="text-[#0E121B] text-2xl font-medium leading-8 mt-2">
+              <p className="text-[#0E121B] text-xl sm:text-2xl font-medium leading-8 mt-2">
                 $786.68
               </p>
             </div>
-            <div className="w-12 h-12 bg-[#1FC16B]/10 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1FC16B]/10 rounded-full flex items-center justify-center flex-shrink-0 ml-3">
               <Clock />
             </div>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E1E4EA] rounded-[16px] p-6 shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)]">
+        <div className="bg-white border border-[#E1E4EA] rounded-[16px] p-4 sm:p-6 shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)] sm:col-span-2 md:col-span-1">
           <div className="flex items-center justify-between">
-            <div>
+            <div className="flex-1 min-w-0">
               <p className="text-[#99A0AE] text-xs font-medium uppercase tracking-[0.48px] leading-4">
                 Pending
               </p>
-              <p className="text-[#0E121B] text-2xl font-medium leading-8 mt-2">
+              <p className="text-[#0E121B] text-xl sm:text-2xl font-medium leading-8 mt-2">
                 {payments.filter((p) => p.status === "Pending").length}
               </p>
             </div>
-            <div className="w-12 h-12 bg-[#FF7B1C]/10 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#FF7B1C]/10 rounded-full flex items-center justify-center flex-shrink-0 ml-3">
               <AlertIcon />
             </div>
           </div>
@@ -223,12 +223,12 @@ export default function PaymentsPage() {
         </div>
 
         {/* Category Filter */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveTab(category)}
-              className={`px-4 h-[40px] text-sm font-medium rounded-[10px] transition-colors ${
+              className={`px-3 sm:px-4 h-[40px] text-xs sm:text-sm font-medium rounded-[10px] transition-colors whitespace-nowrap flex-shrink-0 ${
                 activeTab === category
                   ? "bg-[#335CFF] text-white"
                   : "bg-white border border-[#E1E4EA] text-[#525866] hover:bg-gray-50"
@@ -242,7 +242,7 @@ export default function PaymentsPage() {
 
       {/* Payments List */}
       <div className="bg-white border border-[#E1E4EA] rounded-[16px] shadow-[0_1px_2px_0_rgba(10,_13,_20,_0.03)] overflow-hidden">
-        <div className="px-6 py-4 border-b border-[#E1E4EA]">
+        <div className="px-4 sm:px-6 py-4 border-b border-[#E1E4EA]">
           <h3 className="text-sm font-medium text-[#0E121B] leading-5 tracking-[-0.084px]">
             Recent Payments
           </h3>
@@ -252,25 +252,27 @@ export default function PaymentsPage() {
           {filteredPayments.map((payment) => (
             <div
               key={payment.id}
-              className="px-6 py-4 hover:bg-gray-50 transition-colors"
+              className="px-4 sm:px-6 py-4 hover:bg-gray-50 transition-colors"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-white border border-[#E1E4EA] rounded-full flex items-center justify-center">
+              <div className="flex items-start sm:items-center justify-between gap-3">
+                <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white border border-[#E1E4EA] rounded-full flex items-center justify-center flex-shrink-0">
                     {payment.icon}
                   </div>
-                  <div>
-                    <h4 className="font-medium text-[#0E121B] text-sm leading-5 tracking-[-0.084px]">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-[#0E121B] text-sm leading-5 tracking-[-0.084px] truncate">
                       {payment.merchant}
                     </h4>
-                    <p className="text-xs text-[#525866] leading-4 mt-1">
+                    <p className="text-xs text-[#525866] leading-4 mt-1 line-clamp-2 sm:line-clamp-1">
                       {payment.description}
                     </p>
-                    <div className="flex items-center gap-2 mt-1">
+                    <div className="flex items-center gap-2 mt-1 flex-wrap">
                       <span className="text-xs text-[#99A0AE]">
                         {payment.date}
                       </span>
-                      <span className="text-xs text-[#99A0AE]">•</span>
+                      <span className="text-xs text-[#99A0AE] hidden sm:inline">
+                        •
+                      </span>
                       <span className="text-xs text-[#99A0AE]">
                         {payment.category}
                       </span>
@@ -278,7 +280,7 @@ export default function PaymentsPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                   <div className="text-right">
                     <p className="text-[#0E121B] font-medium text-sm leading-5 tracking-[-0.084px]">
                       {payment.amount}
@@ -291,7 +293,7 @@ export default function PaymentsPage() {
                       {payment.status}
                     </span>
                   </div>
-                  <ArrowRight />
+                  <ArrowRight className="hidden sm:block" />
                 </div>
               </div>
             </div>
